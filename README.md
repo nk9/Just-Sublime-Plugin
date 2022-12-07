@@ -8,7 +8,7 @@ This is an open source plugin, and your PRs are welcome!
 To try this on your own macOS or Linux system, make sure you have [Sublime installed](https://www.sublimetext.com/download). Then [fork this repo](https://github.com/nk9/Just-Sublime-Plugin/fork), download your fork, and symlink it into place:
 
 ```bash
-~ $ git clone https://github.com/nk9/Just-Sublime-Plugin.git
+~ $ git clone https://github.com/<YOUR-GITHUB-HANDLE>/Just-Sublime-Plugin.git
 ~ $ cd Just-Sublime-Plugin
 Just-Sublime-Plugin $ ln -s $PWD ~/Library/Application\ Support/Sublime\ Text/Packages/Just-Sublime-Plugin
 ```
