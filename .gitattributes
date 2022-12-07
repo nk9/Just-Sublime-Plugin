@@ -1,0 +1,5 @@
+# By default, convert line endings to match platform
+* text=auto
+
+# Don't convert line endings in binary files
+*.png   binary
