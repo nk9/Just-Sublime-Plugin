@@ -21,7 +21,7 @@ jobs:
       matrix:
         include:
           - build: latest
-            packages: main
+            packages: v4129 # latest as of 7 Dec 2022
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
