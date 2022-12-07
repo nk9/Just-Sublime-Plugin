@@ -25,3 +25,12 @@ This will open the console and show you the result of the tests.
 ![Results of the syntax tests appear in the Sublime console](assets/syntax_test_results.png)
 
 In this case, the test on line 67 is failing both at column 1, and also in columns 25, 26, 28, and 29.
+
+## Documentation and Tools
+
+- Sublime has some pretty good [syntax documentation](https://www.sublimetext.com/docs/syntax.html)
+- The [ScopeHunter package](https://packagecontrol.io/packages/ScopeHunter) is on PackageControl, and it is essential. With the Instant Scoper, you will get the scope under the cursor as you move around the file.
+- Sublime has a bunch of [default syntax definitions](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax) which you can view and copy. This is particularly helpful for determining which scopes to use in a given case.
+- This is a good blog post covering [Sublime syntax](https://haggainuchi.com/sublime.html)
+- There is a really useful [thread on GitHub with tips and advice](https://github.com/sublimehq/Packages/issues/757) for building Sublime syntax definitions
+- Lastly, the [Sublime Forum](https://forum.sublimetext.com) has several users who are very knowledgeable and active with syntax questions. Searching the archives can also be a big help.
