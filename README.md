@@ -28,7 +28,7 @@ In this case, the test on line 67 is failing both at column 1, and also in colum
 
 ## Documentation and Tools
 
-- Sublime has some pretty good [syntax documentation](https://www.sublimetext.com/docs/syntax.html)
+- Sublime has good documentation on [syntax definitions](https://www.sublimetext.com/docs/syntax.html) and [scope naming](https://www.sublimetext.com/docs/scope_naming.html)
 - The [ScopeHunter package](https://packagecontrol.io/packages/ScopeHunter) is on PackageControl, and it is essential. With the Instant Scoper, you will get the scope under the cursor as you move around the file.
 - Sublime has a bunch of [default syntax definitions](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax) which you can view and copy. This is particularly helpful for determining which scopes to use in a given case.
 - This is a good blog post covering [Sublime syntax](https://haggainuchi.com/sublime.html)
