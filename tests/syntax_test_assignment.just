@@ -35,12 +35,12 @@ varname := "testme # not a comment" # comment
 stuff := ```
 # <- variable.other.just
 #     ^^ keyword.operator.assignment.just
-#        ^^^ string.quoted.triple.just
+#        ^^^ string.quoted.backtick.just
     echo foo
     echo bar
-#   ^^^^^^^^^ string.quoted.triple.just
+#   ^^^^^^^^^ string.quoted.backtick.just
   ```
-# ^^^ string.quoted.triple.just
+# ^^^ string.quoted.backtick.just
 
 escapes := '\t\n\r\"\\'
 # <- variable.other.just
@@ -69,6 +69,18 @@ export RUST_BACKTRACE_3 := bt
 #      ^^^^^^^^^^^^^^^^ variable.other.just
 #                       ^^ keyword.operator.assignment.just
 #                          ^^ variable.other.just
+
+export JUST_LOG := (log + "ing" + `grep loop /etc/networks | cut -f2`)
+# <- keyword.declaration.variable.just
+#      ^^^^^^^^ variable.other.just
+#               ^^ keyword.operator.assignment.just
+#                  ^ meta.group.just punctuation.section.parens.begin.just
+#                   ^^^ meta.group.just variable.other.just
+#                       ^ keyword.operator.arithmetic.just
+#                         ^^^^^ string.quoted.double.just
+#                               ^ keyword.operator.arithmetic.just
+#                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.backtick.just
+#                                                                    ^ meta.group.just punctuation.section.parens.end.just
 
 # comment
 # <- comment.line.number-sign.just punctuation.definition.comment.just

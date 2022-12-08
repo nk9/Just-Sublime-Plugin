@@ -97,11 +97,11 @@ contexts:
     - include: strings
     - include: else-pop
   expression-paren:
-    - meta_scope: meta.sequence.tuple.just
+    - meta_scope: meta.group.just
     - match: '\('
       scope: punctuation.section.parens.begin.just
     - match: '\)'
-      scope: punctuation.section.parens.begin.just
+      scope: punctuation.section.parens.end.just
       pop: true
     - include: functions
     - include: keywords
@@ -231,7 +231,7 @@ contexts:
   strings:
     - match: '`'
       push:
-        - meta_scope: string.quoted.triple.just
+        - meta_scope: string.quoted.backtick.just
         - match: '`'
           pop: true
     - match: '"'
