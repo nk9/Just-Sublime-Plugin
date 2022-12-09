@@ -1,82 +1,77 @@
 # SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
 
-an_arch := trim(lowercase(justfile())) + arch()
-#          ^^^^ meta.group.just entity.name.function.just
+an_arch := trim(justfile()) + arch()
+#          ^^^^ entity.name.function.just - group
 #              ^ meta.group.just punctuation.section.parens.begin.just
-#               ^^^^^^^^^ meta.group.just entity.name.function.just
-#                         ^^^^^^^^ meta.group.just entity.name.function.just
-#                                      ^ keyword.operator.arithmetic.just
-#                                        ^^^^ entity.name.function.just
+#               ^^^^^^^^ entity.name.function.just - group
+#                           ^ keyword.operator.arithmetic.just
+#                             ^^^^ entity.name.function.just - group
 
 trim_end := trim_end("99.99954%   ")
-#           ^^^^^^^^ meta.group.just entity.name.function.just
+#           ^^^^^^^^ entity.name.function.just - group
 #                   ^ meta.group.just punctuation.section.parens.begin.just
 #                    ^^^^^^^^^^^^^^ string.quoted.double.just
 #                                  ^ meta.group.just punctuation.section.parens.end.just
 
 home_dir := replace(env_var('HOME') / "yep", 'yep', '')
-#           ^^^^^^^ meta.group.just entity.name.function.just
-#                   ^^^^^^^ meta.group.just entity.name.function.just
+#           ^^^^^^^ entity.name.function.just - group
+#                   ^^^^^^^ entity.name.function.just - group
 #                                   ^ keyword.operator.arithmetic.just
+#                                                     ^ meta.group.just punctuation.section.parens.end.just
 
 quoted := quote("some things beyond\"$()^%#@!|-+=_*&'`")
-#         ^^^^^ meta.group.just entity.name.function.just
+#         ^^^^^ entity.name.function.just - group
 #              ^ meta.group.just punctuation.section.parens.begin.just
 #               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.just
 #                                  ^^ constant.character.escape.just
 
 smartphone := trim_end_match('blah.txt', 'txt')
-#             ^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#             ^^^^^^^^^^^^^^ entity.name.function.just - group
 
 museum := trim_start_match(trim_start(trim_end_matches('   yep_blah.txt.txt', '.txt')), 'yep_')
-#         ^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
-#                          ^^^^^^^^^^ meta.group.just entity.name.function.just
-#                                     ^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#         ^^^^^^^^^^^^^^^^ entity.name.function.just - group
+#                          ^^^^^^^^^^ entity.name.function.just - group
+#                                     ^^^^^^^^^^^^^^^^ entity.name.function.just - group
 
 water := trim_start_matches('ssssssoup.txt', 's')
-#        ^^^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#        ^^^^^^^^^^^^^^^^^^ entity.name.function.just - group
 
-congress := uppercase(os())
-#           ^^^^^^^^^ meta.group.just entity.name.function.just
-#                    ^ meta.group.just punctuation.section.parens.begin.just
-#                     ^^ meta.group.just entity.name.function.just
-#                       ^ meta.group.just punctuation.section.parens.begin.just
-#                        ^ meta.group.just punctuation.section.parens.end.just
-#                         ^ meta.group.just punctuation.section.parens.end.just
+myos := os()
+#       ^^ entity.name.function.just - group
 
 fam := os_family()
-#      ^^^^^^^^^ meta.group.just entity.name.function.just
+#      ^^^^^^^^^ entity.name.function.just - group
 #               ^ meta.group.just punctuation.section.parens.begin.just
 #                ^ meta.group.just punctuation.section.parens.end.just
 
 path_1 := absolute_path('test')
-#         ^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#         ^^^^^^^^^^^^^ entity.name.function.just - group
 
 ext_z := extension(path_2)
-#        ^^^^^^^^^ meta.group.just entity.name.function.just
+#        ^^^^^^^^^ entity.name.function.just - group
 
 exe_name := file_name(just_executable())
-#           ^^^^^^^^^ meta.group.just entity.name.function.just
+#           ^^^^^^^^^ entity.name.function.just - group
 #                    ^ meta.group.just punctuation.section.parens.begin.just
-#                     ^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#                     ^^^^^^^^^^^^^^^ entity.name.function.just - group
 #                                    ^ meta.group.just punctuation.section.parens.begin.just
 #                                     ^ meta.group.just punctuation.section.parens.end.just
 #                                      ^ meta.group.just punctuation.section.parens.end.just
 
 a_stem := file_stem(path_2)
-#         ^^^^^^^^^ meta.group.just entity.name.function.just
+#         ^^^^^^^^^ entity.name.function.just - group
 #                  ^ meta.group.just punctuation.section.parens.begin.just
 #                   ^^^^^^ meta.group.just variable.other.just
 #                         ^ meta.group.just punctuation.section.parens.end.just
 
 a_parent := parent_directory(path_2)
-#           ^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#           ^^^^^^^^^^^^^^^^ entity.name.function.just - group
 
 sans_ext := without_extension(path_2)
-#           ^^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#           ^^^^^^^^^^^^^^^^^ entity.name.function.just - group
 
 camera := join('tmp', 'dir1', 'dir2', path_2)
-#         ^^^^ meta.group.just entity.name.function.just
+#         ^^^^ entity.name.function.just - group
 #             ^ meta.group.just punctuation.section.parens.begin.just
 #              ^^^^^ string.quoted.single.just
 #                   ^ punctuation.separator.sequence.just
@@ -88,7 +83,7 @@ camera := join('tmp', 'dir1', 'dir2', path_2)
 #                                           ^ meta.group.just punctuation.section.parens.end.just
 
 cleaned := clean('/tmp/blah/..///thing.txt')
-#          ^^^^^ meta.group.just entity.name.function.just
+#          ^^^^^ entity.name.function.just - group
 
 id__path := '/tmp' / sha256('blah') / sha256_file(justfile())
 #                    ^^^^^^ entity.name.function.just
@@ -101,7 +96,7 @@ id__path := '/tmp' / sha256('blah') / sha256_file(justfile())
 #                                                          ^^ punctuation.section.parens.end.just
 
 _another_var := env_var_or_default("HOME", justfile_directory())
-#               ^^^^^^^^^^^^^^^^^^ meta.group.just entity.name.function.just
+#               ^^^^^^^^^^^^^^^^^^ entity.name.function.just - group
 #                                 ^ meta.group.just punctuation.section.parens.begin.just
 #                                  ^^^^^^ string.quoted.double.just
 #                                        ^ punctuation.separator.sequence.just
