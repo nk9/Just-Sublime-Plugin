@@ -33,4 +33,6 @@ In this case, the test on line 67 is failing both at column 1, and also in colum
 - Sublime has a bunch of [default syntax definitions](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax) which you can view and copy. This is particularly helpful for determining which scopes to use in a given case.
 - This is a good blog post covering [Sublime syntax](https://haggainuchi.com/sublime.html)
 - There is a really useful [thread on GitHub with tips and advice](https://github.com/sublimehq/Packages/issues/757) for building Sublime syntax definitions
-- Lastly, the [Sublime Forum](https://forum.sublimetext.com) has several users who are very knowledgeable and active with syntax questions. Searching the archives can also be a big help.
+- Learn about the regex syntax of the [Oniguruma regex engine](https://github.com/kkos/oniguruma/blob/master/doc/RE) which Sublime's syntax parser uses
+- The [Sublime Forum](https://forum.sublimetext.com) has several users who are very knowledgeable and active with syntax questions. Searching the archives can also be a big help.
+- Sublime also runs a [Discord server](https://discord.gg/D43Pecu) with some very helpful folks on it!
