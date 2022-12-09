@@ -26,6 +26,9 @@ variables:
   shellSettings: |
     (?x)
       shell | windows-shell
+  recipeAttributes: |
+    (?x)
+      linux | macos | no-cd | no-exit-message | private | unix | windows
 
 
 contexts:
@@ -39,6 +42,7 @@ contexts:
     - include: strings
     - include: functions
     - include: keywords
+    - include: recipe-attribute
     - include: recipe-definition
     - include: recipe-content
     - include: concatenation
@@ -121,8 +125,11 @@ contexts:
 
 
   #
-  # Recipe definition lines, including arguments and prerequisites
+  # Recipe definition lines, including attributes, arguments and prerequisites
   #
+  recipe-attribute:
+    - match: '\[\s*({{recipeAttributes}})\s*\]'
+      scope: meta.annotation.just variable.annotation.just
   recipe-definition:
     - meta_scope: entity.name.function.just
     - match: '(?=^@?{{validName}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
@@ -153,14 +160,19 @@ contexts:
         - recipe-argument-assignment
         - recipe-argument-name
         - recipe-variadic-operator
+        - recipe-export-operator
     - include: else-pop
   recipe-variadic-operator:
-    - match: '[\+$\*]'
-      scope: keyword.operator.just
+    - match: '[\+\*]'
+      scope: keyword.operator.variadic.just
+    - include: else-pop
+  recipe-export-operator:
+    - match: '\$'
+      scope: keyword.operator.exported.just
     - include: else-pop
   recipe-argument-assignment:
     - match: '='
-      scope: keyword.operator.just
+      scope: keyword.operator.assignment.just
       push:
         - variable-name
         - recipe-argument-value-quoted
