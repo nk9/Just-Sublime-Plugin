@@ -6,16 +6,19 @@
 
 alias s := serve
 # <- support.function.export.just
+#^^^^ support.function.export.just
 #     ^ variable.other.just
 #       ^^ keyword.operator.assignment.just
 #          ^^^^^ entity.name.function.just
 
+ alias a := another
 
 #
 # Variables
 #
 bt := '0'
-# <- variable.other.just
+# <- meta.group.just variable.other.just
+#^ meta.group.just variable.other.just
 #  ^^ keyword.operator.assignment.just
 #     ^^^ string.quoted.single.just
 
