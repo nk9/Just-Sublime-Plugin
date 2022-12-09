@@ -95,6 +95,24 @@ script2 *ARGS:
 
 
 #
+# Recipe dependencies
+#
+target := "main"
+_build version:
+    @echo 'Building {{version}}…'
+    cd {{version}} && make
+
+# Argument to dependency
+build: (_build target)
+#^^^^ meta.function-call.arguments.just entity.name.function.just
+#    ^ keyword.operator.assignment.just
+#      ^ punctuation.section.parens.start.just
+#       ^^^^^^ entity.name.function.just
+#              ^^^^^^ meta.function-call.arguments.just variable.parameter.just
+#                    ^ punctuation.section.parens.end.just
+
+
+#
 # Recipe attributes
 #
 
