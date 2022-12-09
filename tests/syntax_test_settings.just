@@ -65,3 +65,13 @@ set windows-powershell := true
 #   ^^^^^^^^^^^^^^^^^^ entity.other.attribute-name.just
 #                      ^^ keyword.operator.assignment.just
 #                         ^^^^ constant.language.boolean.just
+
+
+#
+# Comments
+#
+set ignore-comments # Comment
+#^^ support.function.export.just
+#   ^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#                   ^ comment.line.number-sign.just punctuation.definition.comment.just
+#                    ^^^^^^^^ comment.line.number-sign.just
