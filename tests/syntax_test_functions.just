@@ -110,3 +110,42 @@ _another_var := env_var_or_default("HOME", justfile_directory())
 #                                                             ^^ punctuation.section.parens.end.just
 
 replaced := replace_regex("1alpha9", "\\d", "b")
+
+
+#
+# Change case
+#
+
+ALL_CAPS := capitalize("lower")
+#           ^^^^^^^^^^ entity.name.function.just - group
+
+kebab := kebabcase("test_me")
+#        ^^^^^^^^^ entity.name.function.just
+
+shoutykebab := shoutykebabcase("test_me")
+#              ^^^^^^^^^^^^^^^ entity.name.function.just
+
+snake := snakecase("test-me")
+#        ^^^^^^^^^ entity.name.function.just
+
+shoutysnake := shoutysnakecase("test-me")
+#              ^^^^^^^^^^^^^^^ entity.name.function.just
+
+uppercamel := uppercamelcase("test-me")
+#             ^^^^^^^^^^^^^^ entity.name.function.just
+
+lowercamel := lowercamelcase("test-me")
+#             ^^^^^^^^^^^^^^ entity.name.function.just
+
+lowercase := lowercase("TEST-ME")
+#            ^^^^^^^^^ entity.name.function.just - group
+
+title := titlecase("test me thanks")
+#        ^^^^^^^^^ entity.name.function.just
+
+upper := uppercase("test-me")
+#        ^^^^^^^^^ entity.name.function.just - group
+#                 ^ meta.group.just punctuation.section.parens.begin.just
+#                  ^^^^^^^^^ string.quoted.double.just
+#                           ^ meta.group.just punctuation.section.parens.end.just
+
