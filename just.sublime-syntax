@@ -71,13 +71,13 @@ contexts:
       push:
         - meta_scope: comment.line.number-sign.just
         - match: $\n? # Consume the newline so that completions aren't shown at the end of the line when typing comments
-          pop: true
+          pop: 1
   interpolate:
     - match: '(?<!\{)\{\{(?!\{)'
       push:
         - meta_scope: string.interpolated.just
         - match: '\}\}'
-          pop: true
+          pop: 1
   functions:
     - match: \b({{builtInFunctions}})\b(?=\()
       scope: entity.name.function.just
@@ -104,7 +104,7 @@ contexts:
   assignment-operator:
     - match: ':='
       scope: keyword.operator.assignment.just
-      pop: true # Only match the first instance
+      pop: 1 # Only match the first instance
     - include: else-pop
   assignment-prefix:
     - match: 'export'
@@ -123,7 +123,7 @@ contexts:
       scope: punctuation.section.parens.begin.just
     - match: '\)'
       scope: punctuation.section.parens.end.just
-      pop: true
+      pop: 1
     - include: functions
     - include: keywords
     # - include: conditional-tests # Doesn't work
@@ -161,7 +161,7 @@ contexts:
   recipe-name:
     - match: '\b{{validName}}\b'
       scope: entity.name.function.just
-      pop: true # Only match the first instance
+      pop: 1 # Only match the first instance
     - include: else-pop
   recipe-argument:
     - meta_scope: meta.function-call.arguments.just
@@ -210,7 +210,7 @@ contexts:
       push:
         - meta_scope: support.type.property-name.just
         - match: $
-          pop: true
+          pop: 1
 
   #
   # "set" expressions like "set shell := ['zsh', '-cu']" and "set dotenv-load"
@@ -246,7 +246,7 @@ contexts:
   constant-boolean:
     - match: '(true|false)'
       scope: constant.language.boolean.just
-      pop: true
+      pop: 1
     - include: else-pop
   string-array:
     - match: '\['
@@ -255,7 +255,7 @@ contexts:
       scope: punctuation.separator.parameters.just
     - match: '\]'
       scope: punctuation.section.brackets.end.just
-      pop: true
+      pop: 1
     - include: strings
 
   #
@@ -272,21 +272,21 @@ contexts:
         - match: \\.
           scope: constant.character.escape.just
         - match: '`'
-          pop: true
+          pop: 1
     - match: '"'
       push:
         - meta_scope: string.quoted.double.just
         - match: \\.
           scope: constant.character.escape.just
         - match: '"'
-          pop: true
+          pop: 1
     - match: "'"
       push:
         - meta_scope: string.quoted.single.just
         - match: \\.
           scope: constant.character.escape.just
         - match: "'"
-          pop: true
+          pop: 1
 
   #
   # Utilities
@@ -296,8 +296,8 @@ contexts:
   # Learn more: https://github.com/sublimehq/Packages/issues/757#issuecomment-287193733
   else-pop:
     - match: (?=\S)
-      pop: true
+      pop: 1
   eol-pop:
     - match: '$\n?'
-      pop: true
+      pop: 1
 
