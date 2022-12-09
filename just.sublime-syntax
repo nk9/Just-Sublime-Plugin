@@ -18,8 +18,15 @@ variables:
       trim | uppercase | uuid | without_extension
   booleanSettings: |
     (?x)
-      allow-duplicate-recipes | dotenv-load | export | fallback | positional-arguments |
-      windows-powershell
+      allow-duplicate-recipes | dotenv-load | export | fallback | ignore-comments |
+      positional-arguments | windows-powershell
+  stringSettings: |
+    (?x)
+      tempdir
+  shellSettings: |
+    (?x)
+      shell | windows-shell
+
 
 contexts:
   main:
@@ -192,6 +199,7 @@ contexts:
       push:
         - settings-boolean
         - settings-shell
+        - settings-string
   settings-boolean:
     - match: '\b{{booleanSettings}}\b'
       scope: entity.other.attribute-name.just
@@ -199,8 +207,15 @@ contexts:
         - constant-boolean
         - assignment-operator
     - include: else-pop
+  settings-string:
+    - match: '\b{{stringSettings}}\b'
+      scope: entity.other.attribute-name.just
+      push:
+        - assignment-operator
+    - include: strings
+    - include: else-pop
   settings-shell:
-    - match: '(shell|windows-shell)'
+    - match: '\b{{shellSettings}}\b'
       scope: entity.other.attribute-name.just
       push:
         - string-array
@@ -232,6 +247,8 @@ contexts:
     - match: '`'
       push:
         - meta_scope: string.quoted.backtick.just
+        - match: \\.
+          scope: constant.character.escape.just
         - match: '`'
           pop: true
     - match: '"'

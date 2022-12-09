@@ -8,9 +8,11 @@ for:
     echo $file; \
   done
 
-bar2 foo_stuff:
-#    ^^^^^^^^^ meta.function-call.arguments.just variable.parameter.just
-#             ^ keyword.operator.assignment.just
+_bar2 foo_stuff:
+# <- meta.function-call.arguments.just entity.name.function.just
+#^^^^ meta.function-call.arguments.just entity.name.function.just
+#     ^^^^^^^^^ meta.function-call.arguments.just variable.parameter.just
+#              ^ keyword.operator.assignment.just
   @echo {{ if foo_stuff == "bar" { "hello" } else { "goodbye" } }}
 # ^ storage.modifier.just
 
