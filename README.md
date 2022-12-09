@@ -28,11 +28,14 @@ In this case, the test on line 67 is failing both at column 1, and also in colum
 
 ## Documentation and Tools
 
-- Sublime has good documentation on [syntax definitions](https://www.sublimetext.com/docs/syntax.html) and [scope naming](https://www.sublimetext.com/docs/scope_naming.html)
+- Sublime has great documentation:
+    + [Syntax definitions](https://www.sublimetext.com/docs/syntax.html)
+    + [Scope naming](https://www.sublimetext.com/docs/scope_naming.html)
+    + [Scope naming guidelines](https://github.com/SublimeText/ScopeNamingGuidelines)
+    + [Default syntax definitions](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax) are available to view and copy
 - The [ScopeHunter package](https://packagecontrol.io/packages/ScopeHunter) is on PackageControl, and it is essential. With the Instant Scoper, you will get the scope under the cursor as you move around the file.
-- Sublime has a bunch of [default syntax definitions](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax) which you can view and copy. This is particularly helpful for determining which scopes to use in a given case.
 - This is a good blog post covering [Sublime syntax](https://haggainuchi.com/sublime.html)
 - There is a really useful [thread on GitHub with tips and advice](https://github.com/sublimehq/Packages/issues/757) for building Sublime syntax definitions
 - Learn about the regex syntax of the [Oniguruma regex engine](https://github.com/kkos/oniguruma/blob/master/doc/RE) which Sublime's syntax parser uses
 - The [Sublime Forum](https://forum.sublimetext.com) has several users who are very knowledgeable and active with syntax questions. Searching the archives can also be a big help.
-- Sublime also runs a [Discord server](https://discord.gg/D43Pecu) with some very helpful folks on it!
+- Sublime also runs a [Discord server](https://discord.gg/D43Pecu) with the same very helpful folks on it!
