@@ -108,3 +108,5 @@ _another_var := env_var_or_default("HOME", justfile_directory())
 #                                          ^^^^^^^^^^^^^^^^^^ entity.name.function.just
 #                                                            ^ punctuation.section.parens.begin.just
 #                                                             ^^ punctuation.section.parens.end.just
+
+replaced := replace_regex("1alpha9", "\\d", "b")
