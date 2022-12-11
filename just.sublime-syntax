@@ -87,9 +87,8 @@ contexts:
     - match: \b(==|!=|=~)\b
       scope: keyword.operator.comparison.just
 
-  #
-  # Functions
-  #
+###[ Built-in Functions ]#####################################################
+
   functions:
     - match: \b({{built_in_functions}})\b\s*(?=\()
       scope: entity.name.function.just
@@ -126,9 +125,8 @@ contexts:
     - match: ','
       scope: punctuation.separator.sequence.just
 
-  #
-  # Variable Assignment
-  #
+###[ Variable Assignment ]#####################################################
+
   assignment:
     - match: '(?=(export)?\s*\b{{valid_name}}\s*:=)'
       push:
@@ -154,9 +152,13 @@ contexts:
     - include: else-pop
   expression-paren:
     - meta_scope: meta.group.just
-    - match: '\('
+    - match: \(
       scope: punctuation.section.group.begin.just
-    - match: '\)'
+      set:
+        - expression-paren-body
+
+  expression-paren-body:
+    - match: \)
       scope: punctuation.section.group.end.just
       pop: 1
     - include: functions
@@ -169,9 +171,9 @@ contexts:
 
 
 
-  #
-  # Recipe definition lines, including attributes, arguments and prerequisites
-  #
+###[ Recipes ]################################################################
+# Recipe definition lines, including attributes, arguments and prerequisites
+
   recipe-attribute:
     - match: '\[\s*({{recipe_attributes}})\s*\]'
       scope: meta.annotation.just variable.annotation.just
@@ -247,9 +249,9 @@ contexts:
         - match: $
           pop: 1
 
-  #
-  # "set" expressions like "set shell := ['zsh', '-cu']" and "set dotenv-load"
-  #
+###[ Set Expressions ]########################################################
+# Ex: "set shell := ['zsh', '-cu']", "set dotenv-load", "set export := false"
+
   settings:
     - match: '\bset\b'
       scope: support.function.export.just
@@ -293,9 +295,8 @@ contexts:
       pop: 1
     - include: strings
 
-  #
-  # General types used all over the place
-  #
+###[ General Types ]##########################################################
+
   variable-name:
     - match: '\b{{valid_name}}\b'
       scope: variable.other.just
@@ -323,16 +324,14 @@ contexts:
         - match: "'"
           pop: 1
 
-  #
-  # Utilities
-  #
+###[ Utilities ]##############################################################
 
-  # Remove the current stack item when we're about to reach a new character
-  # Learn more: https://github.com/sublimehq/Packages/issues/757#issuecomment-287193733
+# Remove the current stack item when we're about to reach a new character
+# Learn more: https://github.com/sublimehq/Packages/issues/757#issuecomment-287193733
   else-pop:
     - match: (?=\S)
       pop: 1
+
   eol-pop:
     - match: '$\n?'
       pop: 1
-
