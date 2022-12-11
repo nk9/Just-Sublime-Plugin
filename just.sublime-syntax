@@ -254,28 +254,28 @@ contexts:
 
   settings:
     - match: '\bset\b'
-      scope: support.function.export.just
+      scope: storage.modifier.definition.just
       push:
         - settings-boolean
         - settings-shell
         - settings-string
   settings-boolean:
     - match: '\b{{boolean_settings}}\b'
-      scope: entity.other.attribute-name.just
+      scope: entity.name.definition.just
       push:
         - constant-boolean
         - assignment-operator
     - include: else-pop
   settings-string:
     - match: '\b{{string_settings}}\b'
-      scope: entity.other.attribute-name.just
+      scope: entity.name.definition.just
       push:
         - assignment-operator
     - include: strings
     - include: else-pop
   settings-shell:
     - match: '\b{{shell_settings}}\b'
-      scope: entity.other.attribute-name.just
+      scope: entity.name.definition.just
       push:
         - string-array
         - assignment-operator

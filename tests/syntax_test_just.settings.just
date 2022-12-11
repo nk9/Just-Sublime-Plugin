@@ -5,42 +5,42 @@
 #
 
 set allow-duplicate-recipes
-# <- support.function.export.just
-#   ^^^^^^^^^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+# <- storage.modifier.definition.just
+#   ^^^^^^^^^^^^^^^^^^^^^^^ entity.name.definition.just
 
 set dotenv-load := true
-#   ^^^^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^^^^ entity.name.definition.just
 #               ^^ keyword.operator.assignment.just
 #                  ^^^^ constant.language.boolean.just
 
 set export
-#   ^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^ entity.name.definition.just
 
 set fallback
-#   ^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^ entity.name.definition.just
 
 set ignore-comments
-#   ^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^^^^^^^^ entity.name.definition.just
 
 # Sequential set
 set ignore-comments := true
 set ignore-comments := false
-#<- support.function.export.just
-#^^ support.function.export.just
-#   ^^^^^^^^^^^^^^^ entity.other.attribute-name.just -group
+#<- storage.modifier.definition.just
+#^^ storage.modifier.definition.just
+#   ^^^^^^^^^^^^^^^ entity.name.definition.just -group
 #                   ^^ keyword.operator.assignment.just
 #                      ^^^^^ constant.language.boolean.just
 
 set positional-arguments
-#   ^^^^^^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^^^^^^^^^^^^^ entity.name.definition.just
 
 set tempdir := '/tmp/just'
-#   ^^^^^^^ entity.other.attribute-name.just - group
+#   ^^^^^^^ entity.name.definition.just - group
 #           ^^ keyword.operator.assignment.just
 #              ^^^^^^^^^^^ string.quoted.single.just
 
 set windows-powershell
-#   ^^^^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^^^^^^^^^^^ entity.name.definition.just
 
 
 #
@@ -48,7 +48,7 @@ set windows-powershell
 #
 
 set shell := ["sh", "-c"]
-#   ^^^^^ entity.other.attribute-name.just
+#   ^^^^^ entity.name.definition.just
 #         ^^ keyword.operator.assignment.just
 #            ^ punctuation.section.brackets.start.just
 #             ^^^^ string.quoted.double.just
@@ -57,12 +57,12 @@ set shell := ["sh", "-c"]
 #                       ^ punctuation.section.brackets.end.just
 
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
-#   ^^^^^^^^^^^^^ entity.other.attribute-name.just
+#   ^^^^^^^^^^^^^ entity.name.definition.just
 #                 ^^ keyword.operator.assignment.just
 
 set windows-powershell := true
-#^^ support.function.export.just
-#   ^^^^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#^^ storage.modifier.definition.just
+#   ^^^^^^^^^^^^^^^^^^ entity.name.definition.just
 #                      ^^ keyword.operator.assignment.just
 #                         ^^^^ constant.language.boolean.just
 
@@ -71,7 +71,7 @@ set windows-powershell := true
 # Comments
 #
 set ignore-comments # Comment
-#^^ support.function.export.just
-#   ^^^^^^^^^^^^^^^ entity.other.attribute-name.just
+#^^ storage.modifier.definition.just
+#   ^^^^^^^^^^^^^^^ entity.name.definition.just
 #                   ^ comment.line.number-sign.just punctuation.definition.comment.just
 #                    ^^^^^^^^ comment.line.number-sign.just
