@@ -93,6 +93,11 @@ script2 *ARGS:
 #            ^ keyword.operator.assignment.just
     {{ python }} script2.py {{ ARGS }}
 
+script3:
+    #!/usr/bin/python3
+#   ^^^^^^^^^^^^^^^^^^ comment.line.shebang.just
+    print("hello world")
+
 
 #
 # Recipe dependencies

@@ -46,7 +46,7 @@ contexts:
     - include: aliases
     - include: interpolate
     - include: comments
-    - include: scripts
+    # - include: recipe-shebang
     - include: assignment
     - include: strings
     - include: functions
@@ -241,11 +241,12 @@ contexts:
     - match: '^\s+(@|-|@-|-@)'
       captures:
         1: storage.modifier.just
-  scripts:
+    - include: recipe-shebang
+  recipe-shebang:
     - match: '\s#\!'
       comment: The #! lines within a recipe.
       push:
-        - meta_scope: support.type.property-name.just
+        - meta_scope: comment.line.shebang.just
         - match: $
           pop: 1
 
