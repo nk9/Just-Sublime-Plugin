@@ -12,8 +12,8 @@ file_extensions:
   - justfile
 
 variables:
-  validName: '[a-zA-Z_][a-zA-Z0-9_-]*'
-  builtInFunctions: |
+  valid_name: '[a-zA-Z_][a-zA-Z0-9_-]*'
+  built_in_functions: |
     (?x)  # ignore whitespace in this regex
 
       absolute_path | arch | capitalize | clean | env_var_or_default | env_var |
@@ -26,20 +26,19 @@ variables:
       trim_start_match | trim_start | trim | uppercase | uppercamelcase |
       uuid | without_extension
 
-  booleanSettings: |
+  boolean_settings: |
     (?x)
       allow-duplicate-recipes | dotenv-load | export | fallback | ignore-comments |
       positional-arguments | windows-powershell
-  stringSettings: |
+  string_settings: |
     (?x)
       tempdir
-  shellSettings: |
+  shell_settings: |
     (?x)
       shell | windows-shell
-  recipeAttributes: |
+  recipe_attributes: |
     (?x)
       linux | macos | no-cd | no-exit-message | private | unix | windows
-
 
 contexts:
   main:
@@ -58,7 +57,7 @@ contexts:
     - include: concatenation
 
   aliases:
-    - match: '^\s*(alias)\s+({{validName}})\s*(:=)\s+({{validName}}).*$'
+    - match: '^\s*(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}}).*$'
       captures:
         1: support.function.export.just
         2: variable.other.just
@@ -78,24 +77,60 @@ contexts:
         - meta_scope: string.interpolated.just
         - match: '\}\}'
           pop: 1
-  functions:
-    - match: \b({{builtInFunctions}})\b(?=\()
-      scope: entity.name.function.just
   keywords:
     - match: \b(if|else|while)\b
       scope: keyword.control.just
   concatenation:
-    - match: '\+'
+    - match: '(\+|\/)'
       scope: keyword.operator.arithmetic.just
   conditional-tests:
     - match: \b(==|!=|=~)\b
       scope: keyword.operator.comparison.just
 
   #
+  # Functions
+  #
+  functions:
+    - match: \b({{built_in_functions}})\b\s*(?=\()
+      scope: entity.name.function.just
+      push: function-call-arguments
+  function-call-arguments:
+    - meta_scope: meta.function-call.arguments.just
+    - match: \(
+      scope: punctuation.section.arguments.begin.just
+      set:
+        # - function-arguments-section-end
+        - function-arguments-section-body
+    - include: function-arguments-section-else-fail
+
+  function-arguments-section-body:
+    - match: \)
+      scope: punctuation.section.arguments.end.just
+      pop: 1
+    - include: expression-paren
+    - include: sequence-separators
+    - include: functions
+    - include: strings
+
+  # function-arguments-section-end:
+
+  function-arguments-section-else-fail:
+    - match: (?=\S|$)
+      fail: function-call-arguments
+    # - match: \)
+    #   scope: punctuation.section.parens.end.just
+    #   pop: true
+    # - include: arguments
+
+  sequence-separators:
+    - match: ','
+      scope: punctuation.separator.sequence.just
+
+  #
   # Variable Assignment
   #
   assignment:
-    - match: '(?=(export)?\s*\b{{validName}}\s*:=)'
+    - match: '(?=(export)?\s*\b{{valid_name}}\s*:=)'
       push:
         - expression-paren
         - assignment-operator
@@ -120,9 +155,9 @@ contexts:
   expression-paren:
     - meta_scope: meta.group.just
     - match: '\('
-      scope: punctuation.section.parens.begin.just
+      scope: punctuation.section.group.begin.just
     - match: '\)'
-      scope: punctuation.section.parens.end.just
+      scope: punctuation.section.group.end.just
       pop: 1
     - include: functions
     - include: keywords
@@ -138,11 +173,11 @@ contexts:
   # Recipe definition lines, including attributes, arguments and prerequisites
   #
   recipe-attribute:
-    - match: '\[\s*({{recipeAttributes}})\s*\]'
+    - match: '\[\s*({{recipe_attributes}})\s*\]'
       scope: meta.annotation.just variable.annotation.just
   recipe-definition:
     - meta_scope: entity.name.function.just
-    - match: '(?=^@?{{validName}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
+    - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
       push:
         - recipe-prerequisites
         - recipe-assignment
@@ -159,7 +194,7 @@ contexts:
     - include: eol-pop
     - include: else-pop
   recipe-name:
-    - match: '\b{{validName}}\b'
+    - match: '\b{{valid_name}}\b'
       scope: entity.name.function.just
       pop: 1 # Only match the first instance
     - include: else-pop
@@ -188,7 +223,7 @@ contexts:
         - recipe-argument-value-quoted
     - include: else-pop
   recipe-argument-name:
-    - match: '\b{{validName}}\b'
+    - match: '\b{{valid_name}}\b'
       scope: variable.parameter.just
     - include: else-pop
   recipe-argument-value-quoted:
@@ -196,7 +231,7 @@ contexts:
     - include: else-pop
 
   recipe-prerequisites:
-    - match: '\b{{validName}}\b'
+    - match: '\b{{valid_name}}\b'
       scope: string.unquoted.just
     - include: eol-pop
     - include: else-pop
@@ -223,21 +258,21 @@ contexts:
         - settings-shell
         - settings-string
   settings-boolean:
-    - match: '\b{{booleanSettings}}\b'
+    - match: '\b{{boolean_settings}}\b'
       scope: entity.other.attribute-name.just
       push:
         - constant-boolean
         - assignment-operator
     - include: else-pop
   settings-string:
-    - match: '\b{{stringSettings}}\b'
+    - match: '\b{{string_settings}}\b'
       scope: entity.other.attribute-name.just
       push:
         - assignment-operator
     - include: strings
     - include: else-pop
   settings-shell:
-    - match: '\b{{shellSettings}}\b'
+    - match: '\b{{shell_settings}}\b'
       scope: entity.other.attribute-name.just
       push:
         - string-array
@@ -262,7 +297,7 @@ contexts:
   # General types used all over the place
   #
   variable-name:
-    - match: '\b{{validName}}\b'
+    - match: '\b{{valid_name}}\b'
       scope: variable.other.just
     - include: else-pop
   strings:
