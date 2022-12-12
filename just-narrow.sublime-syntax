@@ -45,6 +45,11 @@ variables:
     (?x)
       linux | macos | no-cd | no-exit-message | private | unix | windows
 
+
+###############################################################################
+# MAIN CONTEXT
+###############################################################################
+
 contexts:
   main:
     # - include: settings
@@ -52,14 +57,29 @@ contexts:
     # - include: interpolate
     - include: comments
     # - include: recipe-shebang
-    # - include: assignment
-    - include: function-calls
-    - include: strings
+    - include: assignment
+    # - include: function-calls
+    # - include: strings
     # - include: keywords
     # - include: recipe-attribute
     # - include: recipe-definition
     # - include: recipe-content
     # - include: concatenation
+
+  prototype:
+    - include: comments
+
+ ###[ COMMENTS ]################################################################
+
+  comments:
+    - match: '#[^!]'
+      scope: punctuation.definition.comment.begin.just
+      push: comment-line
+
+  comment-line:
+    - meta_include_prototype: false
+    - meta_scope: comment.line.number-sign.just
+    - include: line-end
 
   # aliases:
   #   - match: '^\s*(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}}).*$'
@@ -68,14 +88,6 @@ contexts:
   #       2: variable.other.just
   #       3: keyword.operator.assignment.just
   #       4: entity.name.function.just
-  comments:
-    # Copied from examples thread: https://github.com/sublimehq/Packages/issues/757#issuecomment-326882205
-    - match: '#[^!]'
-      scope: punctuation.definition.comment.just
-      push:
-        - meta_scope: comment.line.number-sign.just
-        - match: $\n? # Consume the newline so that completions aren't shown at the end of the line when typing comments
-          pop: 1
   # interpolate:
   #   - match: '(?<!\{)\{\{(?!\{)'
   #     push:
@@ -92,59 +104,15 @@ contexts:
   #   - match: \b(==|!=|=~)\b
   #     scope: keyword.operator.comparison.just
 
-# ###[ Built-in Functions ]#####################################################
-
-#   function-calls:
-#     - meta_scope: meta.function-call.just
-#     - match: '(\b{{built_in_functions}}\b)'
-#       scope: entity.name.function.just
-#     - match: '(?=\()'
-#       push: function-call-arguments
-
-#   function-call-arguments:
-#     - match: \(
-#       scope: punctuation.section.arguments.begin.just
-#       set:
-#         - function-arguments-section-body
-#     - include: function-arguments-section-else-fail
-
-#   function-arguments-section-body:
-#     - meta_scope: meta.function-call.arguments.just
-#     - match: ''
-#       push:
-#         - expression-paren
-#         - punctuation-separators
-#         - function-calls
-#     - match: \)
-#       scope: punctuation.section.arguments.end.just
-#       pop: 1
-#     - include: strings
-
-#   function-arguments-section-else-fail:
-#     - match: (?=\S|$)
-#       fail: function-call-arguments
-#     # - match: \)
-#     #   scope: punctuation.section.parens.end.just
-#     #   pop: true
-#     # - include: arguments
 
 ###[ STATEMENTS ]##############################################################
-
-  # scl-statements:
-  #   - include: scl-regions
-  #   - include: scl-stmt-case
-  #   - include: scl-stmt-repeat
-  #   - include: scl-control
-  #   - include: scl-expressions
 
   just-expressions:
     - include: groups
     - include: operators
-    # - include: slice-members
     - include: function-calls
     - include: strings
-    # - include: operands-symbols
-    # - include: operands-absolute
+    - include: operands-variables
 
   just-expression-end:
     # Pop nested expression contexts if control keywords are matched.
@@ -155,7 +123,7 @@ contexts:
 ###[ FUNCTION CALL ]###########################################################
 
   function-calls:
-    - match: '(?<=\W){{built_in_functions}}\s*(?=\()' # TODO: REMOVE LOOKBEHIND
+    - match: '{{built_in_functions}}\s*(?=\()'
       scope:
         meta.function-call.identifier.just
         support.function.just
@@ -187,7 +155,6 @@ contexts:
     - match: \)
       scope: punctuation.section.group.end.just
       pop: 1
-    # - include: context-end
     - include: just-expression-end
 
   group-body:
@@ -203,9 +170,6 @@ contexts:
     - match: '(\+|\/)'
       scope: keyword.operator.arithmetic.just
 
-    # - match: ':='
-    #   scope: keyword.operator.assignment.just
-
   punctuation-separators:
     - match: ','
       scope: punctuation.separator.sequence.just
@@ -213,68 +177,53 @@ contexts:
 
 ###[ CHARACTERS ]##############################################################
 
-  # literals-character:
-  #   - match: (\')(?:({{escapes}})|([^']))(\')
-  #     scope: meta.string.just string.quoted.single.just
-  #     captures:
-  #       1: punctuation.definition.string.begin.just
-  #       2: constant.character.escape.just
-  #       3: constant.character.literal.just
-  #       4: punctuation.definition.string.end.just
+  strings:
+    - match: '`'
+      push:
+        - meta_scope: string.quoted.backtick.just
+        - match: \\.
+          scope: constant.character.escape.just
+        - match: '`'
+          pop: 1
+    - match: '"'
+      push:
+        - meta_scope: string.quoted.double.just
+        - match: \\.
+          scope: constant.character.escape.just
+        - match: '"'
+          pop: 1
+    - match: "'"
+      push:
+        - meta_scope: string.quoted.single.just
+        - match: \\.
+          scope: constant.character.escape.just
+        - match: "'"
+          pop: 1
 
+###[ VARIABLES ]##############################################################
+
+  operands-variables:
+    - match: \b(?:{{valid_name}})\b
+      scope: variable.other.just
 
 # ###[ Variable Assignment ]#####################################################
 
-#   assignment:
-#     - match: '(?=(export)?\s*\b{{valid_name}}\s*:=)'
-#       set:
-#         - assignment-value
-#         - assignment-operator
-#         - variable-name
-#         - assignment-prefix
-#   assignment-operator:
-#     - match: ':='
-#       scope: keyword.operator.assignment.just
-#       pop: 1 # Only match the first instance
-#     - include: else-pop
-#   assignment-prefix:
-#     - match: 'export'
-#       scope: keyword.declaration.variable.just
-#     - include: else-pop
-#   assignment-value:
-#     # - match: '(?=[a-zA-Z_]+)'
-#     # - match: ''
-#     #   push:
-#     #     - strings
-#     #   set:
-#     #     - strings
-#     #     - function-calls
-#     #     - variable-name
-#     #     - expression-paren
-#     - include: strings
-#     # - include: variable-name
-#     - include: function-calls
-#     # - include: expression-paren
-#     - include: else-pop
-#   expression-paren:
-#     - meta_scope: meta.group.just
-#     - match: \(
-#       scope: punctuation.section.group.begin.just
-#       set:
-#         - expression-paren-body
+  assignment:
+    - match: '(export)?\s*({{valid_name}})\s*(?=:=)'
+      captures:
+        1: keyword.declaration.variable.just
+        2: variable.other.just
+      push: assignment-value
 
-#   expression-paren-body:
-#     - match: \)
-#       scope: punctuation.section.group.end.just
-#       pop: 1
-#     - include: function-calls
-#     - include: keywords
-#     # - include: conditional-tests # Doesn't work
-#     - include: variable-name
-#     - include: concatenation
-#     - include: strings
-#     - include: else-pop
+  assignment-value:
+    - meta_include_prototype: false
+    - match: :=
+      scope: keyword.operator.assignment.just
+      set: assignment-value-body
 
+  assignment-value-body:
+    - include: eol-pop
+    - include: just-expressions
 
 
 # ###[ Recipes ]################################################################
@@ -408,37 +357,19 @@ contexts:
     - match: '\b{{valid_name}}\b'
       scope: variable.other.just
     - include: else-pop
-  strings:
-    - match: '`'
-      push:
-        - meta_scope: string.quoted.backtick.just
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '`'
-          pop: 1
-    - match: '"'
-      push:
-        - meta_scope: string.quoted.double.just
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '"'
-          pop: 1
-    - match: "'"
-      push:
-        - meta_scope: string.quoted.single.just
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: "'"
-          pop: 1
 
-# ###[ Utilities ]##############################################################
+###[ Common Prototypes ]#######################################################
 
-# # Remove the current stack item when we're about to reach a new character
-# # Learn more: https://github.com/sublimehq/Packages/issues/757#issuecomment-287193733
-#   else-pop:
-#     - match: (?=\S)
-#       pop: 1
+  line-end:
+    - match: $
+      pop: 1
 
-#   eol-pop:
-#     - match: '$\n?'
-#       pop: 1
+# Remove the current stack item when we're about to reach a new character
+# Learn more: https://github.com/sublimehq/Packages/issues/757#issuecomment-287193733
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
+  eol-pop:
+    - match: '$\n?'
+      pop: 1
