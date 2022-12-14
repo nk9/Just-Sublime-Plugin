@@ -11,8 +11,6 @@ alias s := serve
 #       ^^ keyword.operator.assignment.just
 #          ^^^^^ entity.name.function.just
 
- alias a := another
-
 #
 # Variables
 #

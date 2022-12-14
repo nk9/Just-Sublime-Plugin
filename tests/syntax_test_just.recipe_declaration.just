@@ -1,4 +1,4 @@
-# SYNTAX TEST "Packages/Just-Sublime-Plugin/just-narrow.sublime-syntax"
+# SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
 
 for:
 # <- meta.function-call.just entity.name.function.just
