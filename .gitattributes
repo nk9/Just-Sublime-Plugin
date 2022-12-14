@@ -3,3 +3,4 @@
 
 # Don't convert line endings in binary files
 *.png   binary
+*.mp4   binary

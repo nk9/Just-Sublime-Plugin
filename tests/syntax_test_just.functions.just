@@ -1,14 +1,17 @@
 # SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
 
 var1 := if arch() == 'unix' {"yelaw"} else {if "1" == "1" {uppercase("lapse")} else {"hey"}}
+#                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 #          ^^^^ meta.statement.conditional.if.just meta.function-call.identifier.just support.function.builtin.just
 #                                                          ^^^^^^^^^ meta.statement.conditional.if.just meta.statement.conditional.if.just meta.function-call.identifier.just support.function.builtin.just 
 
 an_arch := trim(justfile()) + arch()
 #          ^^^^ meta.function-call.identifier.just support.function.builtin.just
-#              ^ meta.function-call.arguments.just punctuation.section.group.begin.just
-#               ^^^^^^^^ meta.function-call.arguments.just meta.function-call.identifier.just support.function.builtin.just
+#              ^^^^^^^^^^^^ meta.function-call.arguments.just
+#              ^ punctuation.section.group.begin.just 
+#               ^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
 #                           ^ keyword.operator.arithmetic.just
+#                             ^^^^^^ meta.function-call
 #                             ^^^^ meta.function-call.identifier.just support.function.builtin.just
 #                                 ^ meta.function-call.arguments.just punctuation.section.group.begin.just
 #                                  ^ meta.function-call.arguments.just punctuation.section.group.end.just
@@ -17,23 +20,28 @@ export test := "yelaw"
 abc := "hello"
 apath := justfile()
 s := replace      ((test + abc + replace((apath), "/", "_")), "l", "g")
-#                 ^ meta.function-call.arguments.just punctuation.section.group.begin.just
+#                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
+#                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
+#                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.group.just 
+#                 ^ punctuation.section.group.begin.just
 #                  ^ punctuation.section.group.begin.just
-#                   ^^^^ meta.group.just variable.other.just
+#                   ^^^^ variable.other.just
 #                        ^ keyword.operator.arithmetic.just
-#                          ^^^ meta.group.just variable.other.just
+#                          ^^^ variable.other.just
 #                              ^ keyword.operator.arithmetic.just
-#                                ^^^^^^^ meta.function-call.arguments.just meta.group.just meta.function-call.identifier.just support.function.builtin.just
-#                                       ^ meta.function-call.arguments.just meta.group.just meta.function-call.arguments.just punctuation.section.group.begin.just
+#                                ^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                                       ^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just  
+#                                       ^ punctuation.section.group.begin.just
+#                                        ^^^^^^^ meta.group.just
 #                                        ^ punctuation.section.group.begin.just
-#                                         ^^^^^ meta.group.just variable.other.just
-#                                              ^ meta.function-call.arguments.just meta.group.just meta.function-call.arguments.just meta.group.just punctuation.section.group.end.just
+#                                         ^^^^^ variable.other.just
+#                                              ^ punctuation.section.group.end.just
 #                                               ^ punctuation.separator.sequence.just
 #                                                 ^^^ string.quoted.double.just
 #                                                    ^ punctuation.separator.sequence.just
 #                                                      ^^^ string.quoted.double.just
-#                                                         ^ meta.function-call.arguments.just meta.group.just meta.function-call.arguments.just punctuation.section.group.end.just
-#                                                          ^ meta.function-call.arguments.just meta.group.just punctuation.section.group.end.just
+#                                                         ^ punctuation.section.group.end.just
+#                                                          ^ punctuation.section.group.end.just
 #                                                           ^ punctuation.separator.sequence.just
 #                                                             ^^^ string.quoted.double.just
 #                                                                ^ punctuation.separator.sequence.just
@@ -67,9 +75,10 @@ trim_end := trim_end("99.99954%   ")
 
 home_dir := replace(env_var('HOME') / "yep", 'yep', '')
 #           ^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
 #                   ^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
 #                                   ^ keyword.operator.arithmetic.just
-#                                                     ^ meta.function-call.arguments.just punctuation.section.group.end.just
+#                                                     ^ punctuation.section.group.end.just
 
 quoted := quote("some things beyond\"$()^%#@!|-+=_*&'`")
 #         ^^^^^ meta.function-call.identifier.just support.function.builtin.just
@@ -82,11 +91,17 @@ smartphone := trim_end_match('blah.txt', 'txt')
 
 museum := trim_start_match(trim_start(trim_end_matches('   yep_blah.txt.txt', '.txt')), 'yep_')
 #         ^^^^^^^^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
-#                          ^^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
-#                                     ^^^^^^^^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                          ^^^^^^^^^^ meta.function-call.arguments.just meta.function-call.identifier.just support.function.builtin.just
+#                                     ^^^^^^^^^^^^^^^^ meta.function-call.arguments.just meta.function-call.arguments.just meta.function-call.identifier.just support.function.builtin.just
 
-water := trim_start_matches('ssssssoup.txt', 's')
+water := trim_start_matches('fffffruit.txt', 'f')
 #        ^^^^^^^^^^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                          ^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
+#                          ^ punctuation.section.group.begin.just
+#                           ^^^^^^^^^^^^^^^ string.quoted.single.just
+#                                          ^ punctuation.separator.sequence.just
+#                                            ^^^ string.quoted.single.just
+#                                               ^ punctuation.section.group.end.just
 
 myos := os()
 #       ^^ meta.function-call.identifier.just support.function.builtin.just
@@ -112,9 +127,7 @@ exe_name := file_name(just_executable())
 
 a_stem := file_stem(path_2)
 #         ^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
-#                  ^ meta.function-call.arguments.just punctuation.section.group.begin.just
-#                   ^^^^^^ meta.function-call.arguments.just variable.other.just
-#                         ^ meta.function-call.arguments.just punctuation.section.group.end.just
+
 
 a_parent := parent_directory(path_2)
 #           ^^^^^^^^^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just

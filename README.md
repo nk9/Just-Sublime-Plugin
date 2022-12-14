@@ -26,6 +26,20 @@ This will open the console and show you the result of the tests.
 
 In this case, the test on line 67 is failing both at column 1, and also in columns 25, 26, 28, and 29.
 
+### Writing tests
+
+There are several shortcuts which can help speed up writing tests in `syntax_test_` files. These are in the [PackageDev](https://github.com/SublimeText/PackageDev) package.
+
+1. Start a line with a `#` and then press <kbd>Tab</kbd>. Sublime will insert sufficient spaces to get you one beyond the last tested character on the line, then insert the necessary number of carets for a string with a contiguous scope, and then *also* add all scopes which match the selected string.
+
+![Use the tab key to quickly insert tests](assets/tab_key_tests.mp4)
+
+2. If you want to quickly skip columns, you can use <kbd>Shift</kbd>+<kbd>Tab</kbd> to insert 4 spaces as a time. (`.sublime-syntax` files must use spaces for all indentation.)
+
+3. To reduce the verbosity of the test lines, you can quickly insert ranges of scopes using the `^` key. Press it successively to zoom out to ever larger scopes, although it will only auto-generate scopes forward from the initial caret position. When you add assertions below that one, Sublime will exclude the scopes you've already applied above. This is particularly useful for meta scopes which can span many characters and a number of different concrete scopes.
+
+
+
 ## Documentation and Tools
 
 - Sublime has great documentation:
