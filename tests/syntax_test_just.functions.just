@@ -7,7 +7,7 @@ an_arch := trim(justfile()) + arch()
 #                           ^ keyword.operator.arithmetic.just
 #                             ^^^^ entity.name.function.just - group
 
-test := "yelaw"
+export test := "yelaw"
 abc := "hello"
 apath := justfile()
 s := replace      ((test + abc + replace((apath), "/", "_")), "l", "g")

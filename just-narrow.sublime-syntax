@@ -61,7 +61,7 @@ contexts:
     # - include: function-calls
     # - include: strings
     # - include: keywords
-    # - include: recipe-attribute
+    - include: recipe-attribute
     # - include: recipe-definition
     # - include: recipe-content
     # - include: concatenation
@@ -262,13 +262,15 @@ contexts:
         - match: "'"
           pop: 1
 
+
 ###[ VARIABLES ]##############################################################
 
   operands-variables:
     - match: \b(?:{{valid_name}})\b
       scope: variable.other.just
 
-# ###[ Variable Assignment ]#####################################################
+
+###[ VARIABLE ASSIGNMENT ]#####################################################
 
   assignment:
     - match: '(export)?\s*({{valid_name}})\s*(?=:=)'
@@ -288,12 +290,12 @@ contexts:
     - include: just-expressions
 
 
-# ###[ Recipes ]################################################################
-# # Recipe definition lines, including attributes, arguments and prerequisites
+###[ RECIPES ]################################################################
+# Recipe definition lines, including attributes, arguments and prerequisites
 
-#   recipe-attribute:
-#     - match: '\[\s*({{recipe_attributes}})\s*\]'
-#       scope: meta.annotation.just variable.annotation.just
+  recipe-attribute:
+    - match: '^\[\s*({{recipe_attributes}})\s*\]\s*$' # Only one attribute allowed per line
+      scope: meta.annotation.just variable.annotation.just
 #   recipe-definition:
 #     - meta_scope: entity.name.function.just
 #     - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
