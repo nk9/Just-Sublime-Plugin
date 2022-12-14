@@ -47,7 +47,7 @@ variables:
 
 contexts:
   main:
-    # - include: settings
+    - include: settings
     - include: aliases
     # - include: interpolate
     - include: comments
@@ -80,7 +80,7 @@ contexts:
 ###[ ALIASES ]#################################################################
 
   aliases:
-    - match: '^(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}}).*$'
+    - match: '^(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}})(?=.*$)'
       captures:
         1: support.function.export.just
         2: variable.other.just
@@ -291,6 +291,7 @@ contexts:
   recipe-attribute:
     - match: '^\[\s*({{recipe_attributes}})\s*\]\s*$' # Only one attribute allowed per line
       scope: meta.annotation.just variable.annotation.just
+
 #   recipe-definition:
 #     - meta_scope: entity.name.function.just
 #     - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
@@ -364,57 +365,67 @@ contexts:
 #         - match: $
 #           pop: 1
 
-# ###[ Set Expressions ]########################################################
-# # Ex: "set shell := ['zsh', '-cu']", "set dotenv-load", "set export := false"
+###[ Set Expressions ]########################################################
+# Ex: "set shell := ['zsh', '-cu']", "set dotenv-load", "set export := false"
 
-#   settings:
-#     - match: '\bset\b'
-#       scope: storage.modifier.definition.just
-#       push:
-#         - settings-boolean
-#         - settings-shell
-#         - settings-string
-#   settings-boolean:
-#     - match: '\b{{boolean_settings}}\b'
-#       scope: entity.name.definition.just
-#       push:
-#         - constant-boolean
-#         - assignment-operator
-#     - include: else-pop
-#   settings-string:
-#     - match: '\b{{string_settings}}\b'
-#       scope: entity.name.definition.just
-#       push:
-#         - assignment-operator
-#     - include: strings
-#     - include: else-pop
-#   settings-shell:
-#     - match: '\b{{shell_settings}}\b'
-#       scope: entity.name.definition.just
-#       push:
-#         - string-array
-#         - assignment-operator
-#     - include: else-pop
-#   constant-boolean:
-#     - match: '(true|false)'
-#       scope: constant.language.boolean.just
-#       pop: 1
-#     - include: else-pop
-#   string-array:
-#     - match: '\['
-#       scope: punctuation.section.brackets.start.just
-#     - match: ','
-#       scope: punctuation.separator.parameters.just
-#     - match: '\]'
-#       scope: punctuation.section.brackets.end.just
-#       pop: 1
-#     - include: strings
+  settings:
+    - match: '^set\b'
+      scope: storage.modifier.definition.just
+      push:
+        - settings-boolean
+        - settings-shell
+        - settings-string
+
+  settings-boolean:
+    - match: '\b{{boolean_settings}}\b'
+      scope: entity.name.definition.just
+      push:
+        - constant-boolean
+        - assignment-operator
+    - include: else-pop
+
+  settings-string:
+    - match: '\b{{string_settings}}\b'
+      scope: entity.name.definition.just
+      push:
+        - assignment-operator
+    - include: strings
+    - include: else-pop
+
+  settings-shell:
+    - match: '\b{{shell_settings}}\b'
+      scope: entity.name.definition.just
+      push:
+        - string-array
+        - assignment-operator
+    - include: else-pop
+
+  constant-boolean:
+    - match: '(true|false)'
+      scope: constant.language.boolean.just
+      pop: 1
+    - include: else-pop
+
+  string-array:
+    - match: '\['
+      scope: punctuation.section.brackets.start.just
+    - match: ','
+      scope: punctuation.separator.parameters.just
+    - match: '\]'
+      scope: punctuation.section.brackets.end.just
+      pop: 1
+    - include: strings
 
 # ###[ General Types ]##########################################################
 
   variable-name:
     - match: '\b{{valid_name}}\b'
       scope: variable.other.just
+    - include: else-pop
+
+  assignment-operator:
+    - match: :=
+      scope: keyword.operator.assignment.just
     - include: else-pop
 
 ###[ Common Prototypes ]#######################################################

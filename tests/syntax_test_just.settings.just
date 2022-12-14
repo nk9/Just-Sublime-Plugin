@@ -56,7 +56,7 @@ set shell := ["sh", "-c"]
 #                   ^^^^ string.quoted.double.just
 #                       ^ punctuation.section.brackets.end.just
 
-set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command#nocomment"]
 #   ^^^^^^^^^^^^^ entity.name.definition.just
 #                 ^^ keyword.operator.assignment.just
 
@@ -73,5 +73,5 @@ set windows-powershell := true
 set ignore-comments # Comment
 #^^ storage.modifier.definition.just
 #   ^^^^^^^^^^^^^^^ entity.name.definition.just
-#                   ^ comment.line.number-sign.just punctuation.definition.comment.just
+#                   ^^ comment.line.number-sign.just punctuation.definition.comment.begin.just
 #                    ^^^^^^^^ comment.line.number-sign.just
