@@ -48,7 +48,7 @@ variables:
 contexts:
   main:
     # - include: settings
-    # - include: aliases
+    - include: aliases
     # - include: interpolate
     - include: comments
     # - include: recipe-shebang
@@ -64,7 +64,7 @@ contexts:
   prototype:
     - include: comments
 
- ###[ COMMENTS ]################################################################
+###[ COMMENTS ]################################################################
 
   comments:
     - match: '#[^!]'
@@ -76,13 +76,16 @@ contexts:
     - meta_scope: comment.line.number-sign.just
     - include: line-end
 
-  # aliases:
-  #   - match: '^\s*(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}}).*$'
-  #     captures:
-  #       1: support.function.export.just
-  #       2: variable.other.just
-  #       3: keyword.operator.assignment.just
-  #       4: entity.name.function.just
+
+###[ ALIASES ]#################################################################
+
+  aliases:
+    - match: '^(alias)\s+({{valid_name}})\s*(:=)\s+({{valid_name}}).*$'
+      captures:
+        1: support.function.export.just
+        2: variable.other.just
+        3: keyword.operator.assignment.just
+        4: entity.name.function.just
   # interpolate:
   #   - match: '(?<!\{)\{\{(?!\{)'
   #     push:
@@ -153,7 +156,7 @@ contexts:
     - include: just-expressions
 
 
-###[ IF STATEMENT ]###########################################################
+###[ IF STATEMENT ]############################################################
 
   if-statements:
     - match: 'if(?=\s+)'
@@ -255,7 +258,7 @@ contexts:
           pop: 1
 
 
-###[ VARIABLES ]##############################################################
+###[ VARIABLES ]###############################################################
 
   operands-variables:
     - match: \b(?:{{valid_name}})\b
@@ -282,7 +285,7 @@ contexts:
     - include: just-expressions
 
 
-###[ RECIPES ]################################################################
+###[ RECIPES ]#################################################################
 # Recipe definition lines, including attributes, arguments and prerequisites
 
   recipe-attribute:
