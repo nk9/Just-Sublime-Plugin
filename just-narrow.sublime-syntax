@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # https://www.sublimetext.com/docs/syntax.html
-name: Just
+name: Just-narrow
 scope: source.just
 version: 2
 hidden: false
@@ -111,6 +111,7 @@ contexts:
     - include: groups
     - include: operators
     - include: function-calls
+    - include: if-statements
     - include: strings
     - include: operands-variables
 
@@ -161,6 +162,67 @@ contexts:
     - meta_scope: meta.group.just
     - include: group-end
     - include: just-expressions
+
+
+###[ IF STATEMENT ]###########################################################
+
+  if-statements:
+    - match: 'if(?=\s+)'
+      scope: meta.statement.conditional.if.just keyword.control.conditional.if.just
+      set:
+        - if-statement-body
+        - if-statement-conditional
+
+  if-statement-conditional:
+    - meta_content_scope: meta.statement.conditional.if.just
+    - meta_include_prototype: false
+    - match: ''
+      push:
+        - if-statement-conditional-body
+        - if-statement-comparison-operator
+        - if-statement-conditional-body
+
+  if-statement-body:
+    - meta_content_scope: meta.statement.conditional.if.just
+    - meta_include_prototype: false
+    - match: (?={)
+      push:
+        - if-statement-block-end
+        - if-statement-block
+        - if-statement-else
+        - if-statement-block
+    - include: else-pop
+
+  if-statement-conditional-body:
+    - match: (?={)
+      comment: Clean up the conditional-body AND conditional contexts
+      pop: 2
+    - match: (?=!=|==)
+      pop: 1
+    - include: just-expressions
+
+  if-statement-comparison-operator:
+    - match: '!=|=='
+      scope: keyword.operator.comparison.just
+      pop: 1
+
+  if-statement-block:
+    - match: '{'
+      scope: punctuation.section.block.begin.just
+    - match: '}'
+      scope: punctuation.section.block.end.just
+      pop: 1
+    - include: just-expressions
+
+  if-statement-else:
+    - match: 'else'
+      scope: keyword.control.conditional.else.just
+    - match: (?={)
+      pop: 1
+
+  if-statement-block-end:
+    - match: ''
+      pop: 1
 
 
 ###[ OPERATORS ]###############################################################
