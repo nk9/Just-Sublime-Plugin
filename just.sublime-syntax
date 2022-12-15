@@ -141,7 +141,7 @@ contexts:
   if-statements:
     - match: 'if(?=\s+)'
       scope: meta.statement.conditional.if.just keyword.control.conditional.if.just
-      set:
+      push:
         - if-statement-body
         - if-statement-conditional
 
