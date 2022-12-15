@@ -1,0 +1,38 @@
+# SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
+
+braces:
+  echo 'I {{{{LOVE}} curly braces!'
+#         ^^^^^^^^^^ - meta.interpolation.just
+#         ^^ - punctuation.section.interpolation.begin.just
+
+_braces2:
+  echo '{{'I {{LOVE}} curly braces!'}}'
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
+#       ^^ punctuation.section.interpolation.begin.just
+#         ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.just
+#                                   ^^ punctuation.section.interpolation.end.just
+
+_braces3:
+  echo 'I {{ "{{" }}LOVE}} curly braces!'
+#         ^^^^^^^^^^ meta.interpolation.just
+#         ^^ punctuation.section.interpolation.begin.just
+#            ^^^^ string.quoted.double.just
+#                 ^^ punctuation.section.interpolation.end.just
+#                   ^^^^^^^^^^^^^^^^^^^^^^ - meta.interpolation.just
+
+braces4:
+  echo 'I {{{{{{justfile()}} curly braces!'
+#         ^^^^ - meta.interpolation.just punctuation.section.interpolation.begin.just
+#             ^^ punctuation.section.interpolation.begin.just
+#             ^^^^^^^^^^^^^^ meta.interpolation.just
+#               ^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                       ^ meta.function-call.arguments.just punctuation.section.group.begin.just
+#                        ^ meta.function-call.arguments.just punctuation.section.group.end.just
+#                         ^^ punctuation.section.interpolation.end.just
+
+bar foo:
+  echo {{ if foo == "bar" { "hello" } else { "goodbye" } }}
+#      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
+#      ^^ punctuation.section.interpolation.begin.just
+#                                                        ^^ punctuation.section.interpolation.end.just
+#         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just

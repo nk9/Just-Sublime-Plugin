@@ -114,7 +114,14 @@ script3:
 # Recipe dependencies
 #
 _build version:
-    @echo 'Building {{version}}…'
+    @-echo 'Building {{justfile() + "string"}}…'
+#                    ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
+#                      ^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                              ^ meta.function-call.arguments.just punctuation.section.group.begin.just
+#                               ^ meta.function-call.arguments.just punctuation.section.group.end.just
+#                                 ^ keyword.operator.arithmetic.just
+#                                   ^^^^^^^^ string.quoted.double.just
+#                                           ^^ punctuation.section.interpolation.end.just
     cd {{version}} && make
 
 # Argument to dependency
