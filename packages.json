@@ -1,0 +1,10 @@
+{
+    "name": "Justfile",
+    "details": "https://github.com/nk9/Just-Sublime-Plugin",
+    "releases": [
+        {
+            "sublime_text": "*",
+            "tags": true
+        }
+    ]
+}
