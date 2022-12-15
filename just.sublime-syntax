@@ -51,14 +51,14 @@ contexts:
     - include: aliases
     # - include: interpolate
     - include: comments
-    # - include: recipe-shebang
     - include: assignment
     # - include: function-calls
     # - include: strings
     # - include: keywords
     - include: recipe-attribute
-    # - include: recipe-definition
-    # - include: recipe-content
+    - include: recipe-definition
+    - include: recipe-content
+    - include: recipe-shebang
     # - include: concatenation
 
   prototype:
@@ -95,9 +95,6 @@ contexts:
   # keywords:
   #   - match: \b(if|else|while)\b
   #     scope: keyword.control.just
-  # concatenation:
-  #   - match: '(\+|\/)'
-  #     scope: keyword.operator.arithmetic.just
   # conditional-tests:
   #   - match: \b(==|!=|=~)\b
   #     scope: keyword.operator.comparison.just
@@ -292,78 +289,100 @@ contexts:
     - match: '^\[\s*({{recipe_attributes}})\s*\]\s*$' # Only one attribute allowed per line
       scope: meta.annotation.just variable.annotation.just
 
-#   recipe-definition:
-#     - meta_scope: entity.name.function.just
-#     - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
-#       push:
-#         - recipe-prerequisites
-#         - recipe-assignment
-#         - recipe-argument
-#         - recipe-name
-#         - recipe-modifier
-#   recipe-modifier:
-#     - match: '^@'
-#       scope: storage.modifier.just
-#     - include: else-pop
-#   recipe-assignment:
-#     - match: ':'
-#       scope: keyword.operator.assignment.just
-#     - include: eol-pop
-#     - include: else-pop
-#   recipe-name:
-#     - match: '\b{{valid_name}}\b'
-#       scope: entity.name.function.just
-#       pop: 1 # Only match the first instance
-#     - include: else-pop
-#   recipe-argument:
-#     - meta_scope: meta.function-call.arguments.just
-#     - match: '(?=[\+\*$a-zA-Z_])'
-#       push:
-#         - recipe-argument-assignment
-#         - recipe-argument-name
-#         - recipe-variadic-operator
-#         - recipe-export-operator
-#     - include: else-pop
-#   recipe-variadic-operator:
-#     - match: '[\+\*]'
-#       scope: keyword.operator.variadic.just
-#     - include: else-pop
-#   recipe-export-operator:
-#     - match: '\$'
-#       scope: keyword.operator.exported.just
-#     - include: else-pop
-#   recipe-argument-assignment:
-#     - match: '='
-#       scope: keyword.operator.assignment.just
-#       push:
-#         - variable-name
-#         - recipe-argument-value-quoted
-#     - include: else-pop
-#   recipe-argument-name:
-#     - match: '\b{{valid_name}}\b'
-#       scope: variable.parameter.just
-#     - include: else-pop
-#   recipe-argument-value-quoted:
-#     - include: strings
-#     - include: else-pop
+  recipe-definition:
+    - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
+      push:
+        - recipe-dependencies
+        - recipe-assignment
+        - recipe-parameter
+        - recipe-name
+        - recipe-modifier
 
-#   recipe-prerequisites:
-#     - match: '\b{{valid_name}}\b'
-#       scope: string.unquoted.just
-#     - include: eol-pop
-#     - include: else-pop
-#   recipe-content:
-#     - match: '^\s+(@|-|@-|-@)'
-#       captures:
-#         1: storage.modifier.just
-#     - include: recipe-shebang
-#   recipe-shebang:
-#     - match: '\s#\!'
-#       comment: The #! lines within a recipe.
-#       push:
-#         - meta_scope: comment.line.shebang.just
-#         - match: $
-#           pop: 1
+  recipe-modifier:
+    - match: '^@'
+      scope: storage.modifier.just
+    - include: else-pop
+
+  recipe-name:
+    - match: '\b{{valid_name}}\b'
+      scope: meta.function.just entity.name.function.just
+      pop: 1 # Only match the first instance
+    - include: else-pop
+
+  recipe-assignment:
+    - match: ':'
+      scope: keyword.operator.assignment.just
+    - include: eol-pop
+    - include: else-pop
+
+  recipe-parameter:
+    - meta_content_scope: meta.function.parameters.just
+    - match: '(?=[\+\*$a-zA-Z_])'
+      push:
+        - recipe-parameter-assignment
+        - recipe-parameter-name
+        - recipe-export-operator
+        - recipe-variadic-operator
+    - include: else-pop
+
+  recipe-variadic-operator:
+    - match: '[\+\*]'
+      scope: keyword.operator.variadic.just
+    - include: else-pop
+
+  recipe-export-operator:
+    - match: '\$'
+      scope: keyword.operator.exported.just
+    - include: else-pop
+
+  recipe-parameter-assignment:
+    - match: '='
+      scope: keyword.operator.assignment.just
+    - include: just-expressions
+    - match: '\s+'
+      pop: 1
+    - include: else-pop
+
+  recipe-parameter-name:
+    - match: '\b{{valid_name}}\b'
+      scope: variable.parameter.just
+    - include: else-pop
+
+  recipe-dependencies:
+    - match: (?=\()
+      push: recipe-dependency-with-args
+    - match: '\b{{valid_name}}\b'
+      scope: entity.name.function.just
+    - match: '&&'
+      scope: keyword.operator.logical.just
+    - include: eol-pop
+    - include: else-pop
+
+  recipe-dependency-with-args:
+    - match: \)
+      scope: punctuation.section.group.end.just
+      pop: 1
+    - match: '(\()\s*({{valid_name}})\b'
+      captures:
+        1: punctuation.section.group.begin.just
+        2: entity.name.function.just
+    - include: just-expressions
+    - include: else-pop
+
+  recipe-content:
+    - match: '^\s+(@|-@|-|@-)(?!-)'
+      captures:
+        1: storage.modifier.just
+        3: storage.modifier.just
+    - include: recipe-shebang
+
+  recipe-shebang:
+    - match: '\s#\!'
+      comment: The #! lines within a recipe.
+      push:
+        - meta_scope: comment.line.shebang.just
+        - match: $
+          pop: 1
 
 ###[ Set Expressions ]########################################################
 # Ex: "set shell := ['zsh', '-cu']", "set dotenv-load", "set export := false"
