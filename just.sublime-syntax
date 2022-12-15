@@ -54,7 +54,6 @@ contexts:
     - include: recipe-attribute
     - include: recipe-definition
     - include: recipe-contents
-    - include: recipe-shebang
 
   prototype:
     - include: comments
@@ -389,6 +388,7 @@ contexts:
         1: storage.modifier.just
     - include: recipe-content-interpolations
     - include: recipe-content-strings
+    - include: recipe-content-shebang
     - include: eol-pop
 
   recipe-content-interpolations:
@@ -444,8 +444,8 @@ contexts:
         - include: recipe-content-interpolations
 
 
-  recipe-shebang:
-    - match: '\s#\!'
+  recipe-content-shebang:
+    - match: '^\s+#\!'
       comment: The #! lines within a recipe.
       push:
         - meta_scope: comment.line.shebang.just
