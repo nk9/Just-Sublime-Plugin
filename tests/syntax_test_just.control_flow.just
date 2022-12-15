@@ -54,7 +54,7 @@ abc := if "a" == "a" {"yes"} else { if "b" != "b" { "c"} else if "d" == "d" {"e"
 
 # Confirm that the if has ended
 baz:
-#<- meta.function.parameters.just meta.function.just entity.name.function.just
+#<- meta.function.just entity.name.function.just
   echo "hi"
 
 # Chained, multiline if statement
@@ -72,7 +72,7 @@ foo := if "hello" == "goodbye" {
 
 # Confirm that the if has ended
 bar:
-#<- meta.function.parameters.just meta.function.just entity.name.function.just
+#<- meta.function.just entity.name.function.just
   @echo {{foo}}
 
 exists := if path_exists(just_executable()) =~ '^/User' { uuid() } else { 'yeah' }
