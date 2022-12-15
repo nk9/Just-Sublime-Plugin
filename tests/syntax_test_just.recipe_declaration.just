@@ -136,6 +136,51 @@ build: script2 (_build target) script3
 #                              ^^^^^^^ entity.name.function.just
 
 
+
+#
+# Variadic and export operators, and illegal markings
+#
+r2 +$f:
+#  ^^ meta.function.parameters.just
+#  ^ keyword.operator.variadic.just
+#   ^ keyword.operator.exported.just
+    echo "v"
+
+r1 $*f:
+#  ^^ meta.function.parameters.just invalid.illegal.just
+    echo "v"
+
+r2 +$+f:
+#  ^^^ meta.function.parameters.just
+#  ^ keyword.operator.variadic.just
+#   ^^ invalid.illegal.just
+    echo "v"
+
+r3 +$*f:
+#  ^^^ meta.function.parameters.just
+#  ^ keyword.operator.variadic.just
+#   ^^ invalid.illegal.just
+    echo "v"
+
+r4 $$f:
+#  ^^ meta.function.parameters.just
+#  ^ invalid.illegal.just
+#   ^ keyword.operator.exported.just
+    echo "v"
+
+r5 +$+$ f:
+#  ^^^^ meta.function.parameters.just
+#  ^ keyword.operator.variadic.just
+#   ^^ invalid.illegal.just
+#     ^ keyword.operator.exported.just
+
+r6 **$f:
+#  ^^^ meta.function.parameters.just
+#  ^ keyword.operator.variadic.just
+#   ^ invalid.illegal.just
+#    ^ keyword.operator.exported.just
+
+
 #
 # Recipe attributes
 #
