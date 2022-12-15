@@ -2,6 +2,7 @@
 
 braces:
   echo 'I {{{{LOVE}} curly braces!'
+#      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.just 
 #         ^^^^^^^^^^ - meta.interpolation.just
 #         ^^ - punctuation.section.interpolation.begin.just
 
@@ -13,7 +14,8 @@ _braces2:
 #                                   ^^ punctuation.section.interpolation.end.just
 
 _braces3:
-  echo 'I {{ "{{" }}LOVE}} curly braces!'
+  echo `I {{ "{{" }}LOVE}} curly braces!`
+#      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.backtick.just
 #         ^^^^^^^^^^ meta.interpolation.just
 #         ^^ punctuation.section.interpolation.begin.just
 #            ^^^^ string.quoted.double.just
@@ -21,7 +23,8 @@ _braces3:
 #                   ^^^^^^^^^^^^^^^^^^^^^^ - meta.interpolation.just
 
 braces4:
-  echo 'I {{{{{{justfile()}} curly braces!'
+  echo "I {{{{{{justfile()}} curly braces!"
+#      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.just
 #         ^^^^ - meta.interpolation.just punctuation.section.interpolation.begin.just
 #             ^^ punctuation.section.interpolation.begin.just
 #             ^^^^^^^^^^^^^^ meta.interpolation.just
