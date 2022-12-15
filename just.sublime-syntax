@@ -169,12 +169,12 @@ contexts:
     - match: (?={)
       comment: Clean up the conditional-body AND conditional contexts
       pop: 2
-    - match: (?=!=|==)
+    - match: (?=!=|==|=~)
       pop: 1
     - include: just-expressions
 
   if-statement-comparison-operator:
-    - match: '!=|=='
+    - match: '!=|==|=~'
       scope: keyword.operator.comparison.just
       pop: 1
 
