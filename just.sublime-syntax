@@ -158,7 +158,6 @@ contexts:
     - meta_include_prototype: false
     - match: (?={)
       push:
-        - if-statement-block-end
         - if-statement-block
         - if-statement-else
         - if-statement-block
@@ -194,10 +193,6 @@ contexts:
       comment: Chained if statement, so ditch the expected else block and end previous if
       pop: 4
       set: if-statements
-
-  if-statement-block-end:
-    - match: ''
-      pop: 1
 
 
 ###[ OPERATORS ]###############################################################
