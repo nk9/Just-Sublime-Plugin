@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # https://www.sublimetext.com/docs/syntax.html
-name: Just
+name: Justfile
 scope: source.just
 version: 2
 hidden: false
@@ -52,14 +52,11 @@ contexts:
     # - include: interpolate
     - include: comments
     - include: assignment
-    # - include: function-calls
     # - include: strings
-    # - include: keywords
     - include: recipe-attribute
     - include: recipe-definition
     - include: recipe-content
     - include: recipe-shebang
-    # - include: concatenation
 
   prototype:
     - include: comments
@@ -208,6 +205,10 @@ contexts:
       scope: keyword.control.conditional.else.just
     - match: (?={)
       pop: 1
+    - match: (?=if\b)
+      comment: Chained if statement, so ditch the expected else block and end previous if
+      pop: 4
+      set: if-statements
 
   if-statement-block-end:
     - match: ''
