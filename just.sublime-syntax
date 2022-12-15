@@ -315,11 +315,14 @@ contexts:
   recipe-variadic-operator:
     - match: '[\+\*]'
       scope: keyword.operator.variadic.just
+      pop: 1 # Only one allowed
     - include: else-pop
 
   recipe-export-operator:
-    - match: '\$'
+    - match: '\$(?=\s*{{valid_name}})'
       scope: keyword.operator.exported.just
+    - match: '[\+\*\$]'
+      scope: invalid.illegal.just
     - include: else-pop
 
   recipe-parameter-assignment:
