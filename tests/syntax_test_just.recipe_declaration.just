@@ -25,6 +25,12 @@ b: a && d (_bar2 justfile())
 #  ^ entity.name.function.just
 #    ^^ keyword.operator.logical.just
 #       ^ entity.name.function.just 
+#         ^ punctuation.section.group.begin.just
+#          ^^^^^ entity.name.function.just
+#                ^^^^^^^^ meta.function-call.identifier.just support.function.builtin.just
+#                        ^^ meta.function-call.arguments.just
+#                        ^ punctuation.section.group.begin.just
+#                         ^^ punctuation.section.group.end.just
   echo 'B start!'
   just -f {{justfile()}} c
   echo 'B end!'
