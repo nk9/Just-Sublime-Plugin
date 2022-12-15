@@ -368,12 +368,56 @@ contexts:
     - match: '^\s+(@|-@|-|@-)(?!-)'
       captures:
         1: storage.modifier.just
+    - include: recipe-content-interpolations
+    - include: recipe-content-strings
+    - include: eol-pop
+
+  recipe-content-interpolations:
     - match: '\{\{\{\{'
       comment: Escaped double brace. Do nothing
     - match: '\{\{(?!\{)'
       scope: punctuation.section.interpolation.begin.just
-      push: recipe-content-interpolation
-    - include: eol-pop
+      push: recipe-content-interpolation-body
+    # - include: else-pop
+
+  recipe-content-strings:
+    - match: '`'
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_include_prototype: false
+        - match: \\.
+          scope: constant.character.escape.just
+        - include: recipe-content-interpolations
+        - match: '[^`]'
+          scope: string.quoted.backtick.just
+        - match: '`'
+          scope: string.quoted.backtick.just
+          pop: 1
+    - match: '"'
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_include_prototype: false
+        - match: \\.
+          scope: constant.character.escape.just
+        - include: recipe-content-interpolations
+        - match: '[^"]'
+          scope: string.quoted.double.just
+        - match: '"'
+          scope: string.quoted.double.just
+          pop: 1
+    - match: "'"
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_include_prototype: false
+        - match: \\.
+          scope: constant.character.escape.just
+        - include: recipe-content-interpolations
+        - match: "[^']"
+          scope: string.quoted.single.just
+        - match: "'"
+          scope: string.quoted.single.just
+          pop: 1
+
 
   recipe-shebang:
     - match: '\s#\!'
@@ -383,7 +427,7 @@ contexts:
         - match: $
           pop: 1
 
-  recipe-content-interpolation:
+  recipe-content-interpolation-body:
     - meta_scope: meta.interpolation.just
     - match: '\}\}'
       scope: punctuation.section.interpolation.end.just

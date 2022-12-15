@@ -31,11 +31,11 @@ braces4:
 #                         ^^ punctuation.section.interpolation.end.just
 
 bar foo:
-  echo {{ if foo == "bar" { "hello" } else { "goodbye" } }}
-#      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
-#      ^^ punctuation.section.interpolation.begin.just
-#                                                        ^^ punctuation.section.interpolation.end.just
-#         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
+  @echo {{ if foo == "bar" { "hello" } else { "goodbye" } }}
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
+#       ^^ punctuation.section.interpolation.begin.just
+#                                                         ^^ punctuation.section.interpolation.end.just
+#          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
 
 @test5 *args='':
     bash -c 'while (( "$#" )); do echo - $1; shift; done' -- "$@"
