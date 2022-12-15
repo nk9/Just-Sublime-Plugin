@@ -216,46 +216,42 @@ contexts:
 ###[ CHARACTERS ]##############################################################
 
   strings:
-    - include: single-quote-strings
-    - include: double-quote-strings
-    - include: backtick-quote-strings
-
-
-  backtick-quote-strings:
-    - match: '`'
-      scope: punctuation.definition.string.begin.just
-      push:
-        - meta_scope: string.quoted.backtick.just
-        - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '`'
-          scope: punctuation.definition.string.end.just
-          pop: 1
-
-  double-quote-strings:
-    - match: '"'
-      scope: punctuation.definition.string.begin.just
-      push:
-        - meta_scope: string.quoted.double.just
-        - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '"'
-          scope: punctuation.definition.string.end.just
-          pop: 1
-
-  single-quote-strings:
     - match: "'"
       scope: punctuation.definition.string.begin.just
-      push:
-        - meta_scope: string.quoted.single.just
-        - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: "'"
-          scope: punctuation.definition.string.end.just
-          pop: 1
+      push: single-quote-strings
+    - match: '"'
+      scope: punctuation.definition.string.begin.just
+      push: double-quote-strings
+    - match: '`'
+      scope: punctuation.definition.string.begin.just
+      push: backtick-quote-strings
+
+  single-quote-strings:
+    - meta_scope: string.quoted.single.just
+    - meta_include_prototype: false
+    - match: \\.
+      scope: constant.character.escape.just
+    - match: "'"
+      scope: punctuation.definition.string.end.just
+      pop: 1
+
+  double-quote-strings:
+    - meta_scope: string.quoted.double.just
+    - meta_include_prototype: false
+    - match: \\.
+      scope: constant.character.escape.just
+    - match: '"'
+      scope: punctuation.definition.string.end.just
+      pop: 1
+
+  backtick-quote-strings:
+    - meta_scope: string.quoted.backtick.just
+    - meta_include_prototype: false
+    - match: \\.
+      scope: constant.character.escape.just
+    - match: '`'
+      scope: punctuation.definition.string.end.just
+      pop: 1
 
 
 ###[ VARIABLES ]###############################################################
@@ -399,38 +395,23 @@ contexts:
   # needed to include interpolations, which would have to be nested
   # inside a push: in the other context.
   recipe-content-strings:
-    - match: '`'
+    - match: "'"
       scope: punctuation.definition.string.begin.just
       push:
-        - meta_scope: string.quoted.backtick.just
         - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '`'
-          scope: punctuation.definition.string.end.just
-          pop: 1
+        - include: single-quote-strings
         - include: recipe-content-interpolations
     - match: '"'
       scope: punctuation.definition.string.begin.just
       push:
-        - meta_scope: string.quoted.double.just
         - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: '"'
-          scope: punctuation.definition.string.end.just
-          pop: 1
+        - include: double-quote-strings
         - include: recipe-content-interpolations
-    - match: "'"
+    - match: '`'
       scope: punctuation.definition.string.begin.just
       push:
-        - meta_scope: string.quoted.single.just
         - meta_include_prototype: false
-        - match: \\.
-          scope: constant.character.escape.just
-        - match: "'"
-          scope: punctuation.definition.string.end.just
-          pop: 1
+        - include: backtick-quote-strings
         - include: recipe-content-interpolations
 
 
