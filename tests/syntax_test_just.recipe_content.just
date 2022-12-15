@@ -36,3 +36,7 @@ bar foo:
 #      ^^ punctuation.section.interpolation.begin.just
 #                                                        ^^ punctuation.section.interpolation.end.just
 #         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
+
+@test5 *args='':
+    bash -c 'while (( "$#" )); do echo - $1; shift; done' -- "$@"
+#   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - comment
