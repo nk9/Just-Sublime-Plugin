@@ -49,13 +49,11 @@ contexts:
   main:
     - include: settings
     - include: aliases
-    # - include: interpolate
     - include: comments
     - include: assignment
-    # - include: strings
     - include: recipe-attribute
     - include: recipe-definition
-    - include: recipe-content
+    - include: recipe-contents
     - include: recipe-shebang
 
   prototype:
@@ -83,18 +81,6 @@ contexts:
         2: variable.other.just
         3: keyword.operator.assignment.just
         4: entity.name.function.just
-  # interpolate:
-  #   - match: '(?<!\{)\{\{(?!\{)'
-  #     push:
-  #       - meta_scope: string.interpolated.just
-  #       - match: '\}\}'
-  #         pop: 1
-  # keywords:
-  #   - match: \b(if|else|while)\b
-  #     scope: keyword.control.just
-  # conditional-tests:
-  #   - match: \b(==|!=|=~)\b
-  #     scope: keyword.operator.comparison.just
 
 
 ###[ STATEMENTS ]##############################################################
@@ -370,12 +356,21 @@ contexts:
     - include: just-expressions
     - include: else-pop
 
-  recipe-content:
+  recipe-contents:
+    - match: '(?=^\s+)'
+      comment: Recipe contents are always indented
+      push: recipe-content-line
+
+  recipe-content-line:
     - match: '^\s+(@|-@|-|@-)(?!-)'
       captures:
         1: storage.modifier.just
-        3: storage.modifier.just
-    - include: recipe-shebang
+    - match: '\{\{\{\{'
+      comment: Escaped double brace. Do nothing
+    - match: '\{\{(?!\{)'
+      scope: punctuation.section.interpolation.begin.just
+      push: recipe-content-interpolation
+    - include: eol-pop
 
   recipe-shebang:
     - match: '\s#\!'
@@ -385,7 +380,15 @@ contexts:
         - match: $
           pop: 1
 
-###[ Set Expressions ]########################################################
+  recipe-content-interpolation:
+    - meta_scope: meta.interpolation.just
+    - match: '\}\}'
+      scope: punctuation.section.interpolation.end.just
+      pop: 1
+    - include: just-expressions
+
+
+###[ Set Expressions ]#########################################################
 # Ex: "set shell := ['zsh', '-cu']", "set dotenv-load", "set export := false"
 
   settings:
