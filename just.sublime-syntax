@@ -142,16 +142,16 @@ contexts:
       scope: meta.statement.conditional.if.just keyword.control.conditional.if.just
       push:
         - if-statement-body
-        - if-statement-conditional
+        - if-statement-condition
 
-  if-statement-conditional:
+  if-statement-condition:
     - meta_content_scope: meta.statement.conditional.if.just
     - meta_include_prototype: false
     - match: ''
       push:
-        - if-statement-conditional-body
+        - if-statement-condition-body
         - if-statement-comparison-operator
-        - if-statement-conditional-body
+        - if-statement-condition-body
 
   if-statement-body:
     - meta_content_scope: meta.statement.conditional.if.just
@@ -163,7 +163,7 @@ contexts:
         - if-statement-block
     - include: else-pop
 
-  if-statement-conditional-body:
+  if-statement-condition-body:
     - match: (?={)
       comment: Clean up the conditional-body AND conditional contexts
       pop: 2
