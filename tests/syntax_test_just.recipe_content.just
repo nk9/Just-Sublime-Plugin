@@ -43,3 +43,7 @@ bar foo:
 @test5 *args='':
     bash -c 'while (( "$#" )); do echo - $1; shift; done' -- "$@"
 #   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - comment
+
+test3 target tests=path_1:
+    @echo 'Testing {{ target }}:{{ tests }}…'
+#                     ^^^^^^ meta.interpolation.just variable.other.just
