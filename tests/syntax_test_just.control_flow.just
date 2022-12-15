@@ -74,3 +74,7 @@ foo := if "hello" == "goodbye" {
 bar:
 #<- meta.function.parameters.just meta.function.just entity.name.function.just
   @echo {{foo}}
+
+exists := if path_exists(just_executable()) =~ '^/User' { uuid() } else { 'yeah' }
+#         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
+#                                           ^^ keyword.operator.comparison.just
