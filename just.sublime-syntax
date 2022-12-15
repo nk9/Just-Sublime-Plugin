@@ -285,7 +285,7 @@ contexts:
     - include: just-expressions
 
 
-###[ RECIPES ]#################################################################
+###[ RECIPE DEFINITION ]#######################################################
 # Recipe definition lines, including attributes, arguments and prerequisites
 
   recipe-attribute:
@@ -375,6 +375,9 @@ contexts:
     - include: just-expressions
     - include: else-pop
 
+
+###[ RECIPE CONTENTS ]#########################################################
+
   recipe-contents:
     - match: '(?=^\s+)'
       comment: Recipe contents are always indented
@@ -394,6 +397,13 @@ contexts:
     - match: '\{\{(?!\{)'
       scope: punctuation.section.interpolation.begin.just
       push: recipe-content-interpolation-body
+
+  recipe-content-interpolation-body:
+    - meta_scope: meta.interpolation.just
+    - match: '\}\}'
+      scope: punctuation.section.interpolation.end.just
+      pop: 1
+    - include: just-expressions
 
   # Sadly, almost an exact duplicate of the 'strings' context, but
   # needed to include interpolations, which would have to be nested
@@ -441,13 +451,6 @@ contexts:
         - meta_scope: comment.line.shebang.just
         - match: $
           pop: 1
-
-  recipe-content-interpolation-body:
-    - meta_scope: meta.interpolation.just
-    - match: '\}\}'
-      scope: punctuation.section.interpolation.end.just
-      pop: 1
-    - include: just-expressions
 
 
 ###[ Set Expressions ]#########################################################
