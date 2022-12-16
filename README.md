@@ -10,6 +10,10 @@ The Sublime syntax has been completely rewritten to be more expressive and suppo
 
 ![interpolation](/Users/nick/Projects/OSS/Just/assets/interpolation.png)
 
+Get instant feedback as you type when you’ve made a syntax error.
+
+![errors](/Users/nick/Projects/OSS/Just/assets/errors.gif)
+
 ## Comments
 
 Use the Sublime comment shortcut (<kbd>Cmd</kbd>+<kbd>/</kbd> to easily comment and uncomment lines.
