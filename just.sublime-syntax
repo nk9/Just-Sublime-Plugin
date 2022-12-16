@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # https://www.sublimetext.com/docs/syntax.html
-name: Justfile
+name: Just
 scope: source.just
 version: 2
 hidden: false

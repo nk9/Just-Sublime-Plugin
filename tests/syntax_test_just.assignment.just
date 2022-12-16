@@ -1,4 +1,4 @@
-# SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
+# SYNTAX TEST "Packages/Just/just.sublime-syntax"
 
 #
 # aliases
