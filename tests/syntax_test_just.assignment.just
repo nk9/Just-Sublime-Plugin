@@ -31,8 +31,7 @@ log := "warn"
 
 varname := "testme # not a comment" # comment
 #       ^^ keyword.operator.assignment.just
-#          ^^^^^^^ string.quoted.double.just
-#                     ^ string.quoted.double.just - comment
+#          ^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.just - comment
 #                                   ^^ comment.line.number-sign.just punctuation.definition.comment.begin.just
 #                                     ^^^^^^^ comment.line.number-sign.just
 

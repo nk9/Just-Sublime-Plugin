@@ -1,9 +1,9 @@
 # SYNTAX TEST "Packages/Just-Sublime-Plugin/just.sublime-syntax"
 
 var1 := if arch() == 'unix' {"yelaw"} else {if "1" == "1" {uppercase("lapse")} else {"hey"}}
-#                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+#                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.else.just meta.block.just meta.statement.conditional.if.just
 #          ^^^^ meta.statement.conditional.if.just meta.function-call.identifier.just support.function.builtin.just
-#                                                          ^^^^^^^^^ meta.statement.conditional.if.just meta.statement.conditional.if.just meta.function-call.identifier.just support.function.builtin.just 
+#                                                          ^^^^^^^^^ support.function.builtin.just
 
 an_arch := trim(justfile()) + arch()
 #          ^^^^ meta.function-call.identifier.just support.function.builtin.just
@@ -19,8 +19,8 @@ an_arch := trim(justfile()) + arch()
 export test := "yelaw"
 abc := "hello"
 apath := justfile()
+
 s := replace      ((test + abc + replace((apath), "/", "_")), "l", "g")
-#                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
 #                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.just
 #                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.group.just 
 #                 ^ punctuation.section.group.begin.just
