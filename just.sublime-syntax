@@ -84,11 +84,14 @@ contexts:
 
 ###[ STATEMENTS ]##############################################################
 
+  just-statements:
+    - include: if-statements
+    - include: just-expressions
+
   just-expressions:
     - include: groups
     - include: operators
     - include: function-calls
-    - include: if-statements
     - include: strings
     - include: operands-variables
 
@@ -138,62 +141,36 @@ contexts:
 ###[ IF STATEMENT ]############################################################
 
   if-statements:
-    - match: 'if(?=\s+)'
-      scope: meta.statement.conditional.if.just keyword.control.conditional.if.just
-      push:
-        - if-statement-body
-        - if-statement-condition
-
-  if-statement-condition:
-    - meta_content_scope: meta.statement.conditional.if.just
-    - meta_include_prototype: false
-    - match: ''
-      push:
-        - if-statement-condition-body
-        - if-statement-comparison-operator
-        - if-statement-condition-body
-
-  if-statement-body:
-    - meta_content_scope: meta.statement.conditional.if.just
-    - meta_include_prototype: false
-    - match: (?={)
-      push:
-        - if-statement-block
-        - if-statement-else
-        - if-statement-block
-    - include: else-pop
+    - match: 'if\b'
+      scope: keyword.control.conditional.if.just
+      push: if-statement-condition-body
+    - match: 'else\b'
+      scope: keyword.control.conditional.else.just
+      push: else-statement-block
 
   if-statement-condition-body:
-    - match: (?={)
-      comment: Clean up the conditional-body AND conditional contexts
-      pop: 2
-    - match: (?=!=|==|=~)
-      pop: 1
-    - include: just-expressions
-
-  if-statement-comparison-operator:
-    - match: '!=|==|=~'
-      scope: keyword.operator.comparison.just
-      pop: 1
-
-  if-statement-block:
+    - meta_scope: meta.statement.conditional.if.just
     - match: '{'
       scope: punctuation.section.block.begin.just
+      push: if-else-block-body
+    - match: '!=|==|=~'
+      scope: keyword.operator.comparison.just
+    - include: just-expressions
+    - include: else-pop
+
+  else-statement-block:
+    - meta_scope: meta.statement.conditional.else.just
+    - match: '{'
+      scope: punctuation.section.block.begin.just
+      push: if-else-block-body
+    - include: else-pop
+
+  if-else-block-body:
+    - meta_scope: meta.block.just
     - match: '}'
       scope: punctuation.section.block.end.just
-      pop: 1
-    - include: just-expressions
-
-  if-statement-else:
-    - match: 'else'
-      scope: keyword.control.conditional.else.just
-    - match: (?={)
-      pop: 1
-    - match: (?=if\b)
-      comment: Chained if statement, so ditch the expected else block and end previous if
-      pop: 4
-      set: if-statements
-
+      pop: 2
+    - include: just-statements
 
 ###[ OPERATORS ]###############################################################
 
@@ -276,7 +253,7 @@ contexts:
 
   assignment-value-body:
     - include: eol-pop
-    - include: just-expressions
+    - include: just-statements
 
 
 ###[ RECIPE DEFINITION ]#######################################################
@@ -338,7 +315,7 @@ contexts:
   recipe-parameter-assignment:
     - match: '='
       scope: keyword.operator.assignment.just
-    - include: just-expressions
+    - include: just-statements
     - match: '\s+'
       pop: 1
     - include: else-pop
@@ -398,7 +375,7 @@ contexts:
     - match: '\}\}'
       scope: punctuation.section.interpolation.end.just
       pop: 1
-    - include: just-expressions
+    - include: just-statements
 
   # Sadly, almost an exact duplicate of the 'strings' context, but
   # needed to include interpolations, which would have to be nested
