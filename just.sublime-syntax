@@ -264,21 +264,22 @@ contexts:
   recipe-definition:
     - match: '(?=^@?{{valid_name}}[^:]*:[^=])' # Matches 'recipeName:' but not 'varName :='
       push:
-        - recipe-dependencies
-        - recipe-assignment
-        - recipe-parameter
         - recipe-name
         - recipe-modifier
 
   recipe-modifier:
     - match: '^@'
-      scope: storage.modifier.quiet.just
+      scope: meta.function.just storage.modifier.quiet.just
     - include: else-pop
 
   recipe-name:
     - match: '\b{{valid_name}}\b'
       scope: meta.function.just entity.name.function.just
       pop: 1 # Only match the first instance
+      push:
+        - recipe-dependencies
+        - recipe-assignment
+        - recipe-parameter
     - include: else-pop
 
   recipe-assignment:

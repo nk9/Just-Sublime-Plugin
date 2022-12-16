@@ -9,19 +9,19 @@ for:
   done
 
 _bar2 foo_stuff:
-# <- meta.function.parameters.just entity.name.function.just
-#^^^^ meta.function.parameters.just entity.name.function.just
+# <- meta.function.just entity.name.function.just
+#^^^^ meta.function.just entity.name.function.just
 #     ^^^^^^^^^ meta.function.parameters.just variable.parameter.just
 #              ^ keyword.operator.assignment.just
   @echo {{ if foo_stuff == "bar" { "hello" } else { "goodbye" } }}
 # ^ storage.modifier.quiet.just
 
 @a:
-# <- meta.function.parameters.just storage.modifier.quiet.just
+# <- meta.function.just storage.modifier.quiet.just
   echo 'A!'
 
 b: a && d (_bar2 justfile())
-# <- meta.function.parameters.just entity.name.function.just
+# <- meta.function.just entity.name.function.just
 #^ keyword.operator.assignment.just
 #  ^ entity.name.function.just
 #    ^^ keyword.operator.logical.just
@@ -99,7 +99,7 @@ variadic $VAR1_1 VAR2 VAR3 VAR4=("a") +$FLAGS='-q': foo2 braces
   cargo test {{FLAGS}}
 
 script2 *ARGS:
-#^^^^^^ meta.function.parameters.just entity.name.function.just
+#^^^^^^ meta.function.just entity.name.function.just
 #       ^ meta.function.parameters.just keyword.operator.variadic.just
 #        ^^^^ meta.function.parameters.just variable.parameter.just
 #            ^ keyword.operator.assignment.just
@@ -128,7 +128,7 @@ _build version:
 # Argument to dependency
 target := "main"
 build: script2 (_build target) script3
-#^^^^ meta.function.parameters.just entity.name.function.just
+#^^^^ meta.function.just entity.name.function.just
 #    ^ keyword.operator.assignment.just
 #      ^^^^^^^ entity.name.function.just
 #               ^^^^^^ entity.name.function.just
