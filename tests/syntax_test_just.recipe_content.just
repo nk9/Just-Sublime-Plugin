@@ -38,7 +38,9 @@ bar foo:
 #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.interpolation.just
 #       ^^ punctuation.section.interpolation.begin.just
 #                                                         ^^ punctuation.section.interpolation.end.just
-#          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
+#          ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.conditional.if.just
+#                                      ^^^^^^^^^^^^^^^^^^ meta.statement.conditional.else.just
+#                                      ^^^^ keyword.control.conditional.else.just
 
 @test5 *args='':
     bash -c 'while (( "$#" )); do echo - $1; shift; done' -- "$@"
