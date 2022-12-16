@@ -272,7 +272,7 @@ contexts:
 
   recipe-modifier:
     - match: '^@'
-      scope: storage.modifier.just
+      scope: storage.modifier.quiet.just
     - include: else-pop
 
   recipe-name:
@@ -353,9 +353,14 @@ contexts:
       push: recipe-content-line
 
   recipe-content-line:
-    - match: '^\s+(@|-@|-|@-)(?!-)'
+    - match: '^\s+((@)|(-)(@)|(-)|(@)(-))(?!-)'
       captures:
-        1: storage.modifier.just
+        2: storage.modifier.quiet.just
+        3: storage.modifier.ignore-error.just
+        4: storage.modifier.quiet.just
+        5: storage.modifier.ignore-error.just
+        6: storage.modifier.quiet.just
+        7: storage.modifier.ignore-error.just
     - include: recipe-content-interpolations
     - include: recipe-content-strings
     - include: recipe-content-shebang

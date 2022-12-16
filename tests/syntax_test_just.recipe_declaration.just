@@ -14,9 +14,10 @@ _bar2 foo_stuff:
 #     ^^^^^^^^^ meta.function.parameters.just variable.parameter.just
 #              ^ keyword.operator.assignment.just
   @echo {{ if foo_stuff == "bar" { "hello" } else { "goodbye" } }}
-# ^ storage.modifier.just
+# ^ storage.modifier.quiet.just
 
-a:
+@a:
+# <- meta.function.parameters.just storage.modifier.quiet.just
   echo 'A!'
 
 b: a && d (_bar2 justfile())
