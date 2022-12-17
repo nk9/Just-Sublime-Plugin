@@ -8,11 +8,11 @@ The Sublime syntax has been completely rewritten to be more expressive and suppo
 
 ![settings_variables](assets/settings_variables.png)
 
-![interpolation](/Users/nick/Projects/OSS/Just/assets/interpolation.png)
+![interpolation](assets/interpolation.png)
 
 Get instant feedback as you type when you’ve made a syntax error.
 
-<video src="/Users/nick/Projects/OSS/Just/assets/errors.mp4" autoplay loop></video>
+<video src="assets/errors.mp4" autoplay loop></video>
 
 
 
@@ -20,7 +20,7 @@ Get instant feedback as you type when you’ve made a syntax error.
 
 Use the Sublime comment shortcut (<kbd>Cmd</kbd>+<kbd>/</kbd> to easily comment and uncomment lines.
 
-<video src="/Users/nick/Projects/OSS/Just/assets/comments.webm.mp4" autoplay loop></video>
+<video src="assets/comments.webm.mp4" autoplay loop></video>
 
 
 
@@ -28,7 +28,7 @@ Use the Sublime comment shortcut (<kbd>Cmd</kbd>+<kbd>/</kbd> to easily comment 
 
 Just contains a built-in formatter, which also checks your file for correctness. When you install this package, a `Check Justfile` Build System will appear in `Tools > Build System`. It will be available to the Automatic Build System when editing a justfile. You can run it with <kbd>Cmd</kbd>+<kbd>B</kbd> (macOS), and you'll see any changes and errors in the console. You can also find the Build System in the Goto Anything menu (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>).
 
-<video src="/Users/nick/Projects/OSS/Just/assets/build_system.webm.mp4" autoplay loop></video>
+<video src="assets/build_system.webm.mp4" autoplay loop></video>
 
 ## Contributing
 
