@@ -30,7 +30,8 @@ There are several shortcuts which can help speed up writing tests in `syntax_tes
 
 1. Start a line with a `#` and then press <kbd>Tab</kbd>. Sublime will insert sufficient spaces to get you one beyond the last tested character on the line, then insert the necessary number of carets for a string with a contiguous scope, and then *also* add all scopes which match the selected string.
 
-<video src="/Users/nick/Projects/OSS/Just/assets/tab_key_tests.webm" autoplay loop muted></video>
+https://user-images.githubusercontent.com/3646730/208213422-1ceec5de-a9a0-418f-b1d8-b0b384a896de.mp4
+
 
 2. If you want to quickly skip columns, you can use <kbd>Shift</kbd>+<kbd>Tab</kbd> to insert 4 spaces as a time. (`.sublime-syntax` files must use spaces for all indentation.)
 
