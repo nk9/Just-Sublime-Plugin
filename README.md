@@ -12,7 +12,7 @@ The Sublime syntax has been completely rewritten to be more expressive and suppo
 
 Get instant feedback as you type when you’ve made a syntax error.
 
-<video src="/Users/nick/Projects/OSS/Just/assets/errors.webm" autoplay loop></video>
+<video src="/Users/nick/Projects/OSS/Just/assets/errors.mp4" autoplay loop></video>
 
 
 
