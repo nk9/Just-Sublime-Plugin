@@ -12,14 +12,14 @@ The Sublime syntax has been completely rewritten to be more expressive and suppo
 
 Get instant feedback as you type when you’ve made a syntax error.
 
-https://user-images.githubusercontent.com/3646730/208212513-7cfab693-ad00-4ba4-b8da-6cda06cc7d98.mp4
+https://user-images.githubusercontent.com/3646730/208213239-83db789f-0ee6-4708-b9ed-a1ce14dcf14b.mp4
 
 
 ## Comments
 
 Use the Sublime comment shortcut (<kbd>Cmd</kbd>+<kbd>/</kbd> to easily comment and uncomment lines.
 
-https://user-images.githubusercontent.com/3646730/208212674-fb1e397b-85a8-459b-9c62-3a83f609290e.mp4
+https://user-images.githubusercontent.com/3646730/208213247-a31a9c4c-f656-4dd1-8109-e42b0a52ad20.mp4
 
 
 ## Check Your Just Code
