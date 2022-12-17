@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/3646730/208212674-fb1e397b-85a8-459b-9
 
 Just contains a built-in formatter, which also checks your file for correctness. When you install this package, a `Check Justfile` Build System will appear in `Tools > Build System`. It will be available to the Automatic Build System when editing a justfile. You can run it with <kbd>Cmd</kbd>+<kbd>B</kbd> (macOS), and you'll see any changes and errors in the console. You can also find the Build System in the Goto Anything menu (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>).
 
-https://user-images.githubusercontent.com/3646730/208212656-928f272e-091a-4f1a-8eb4-6ff58ec4f9d2.mp4
+https://user-images.githubusercontent.com/3646730/208213085-ab18099e-553e-4c80-946c-529ef950ced5.mp4
 
 
 ## Contributing
